@@ -9,6 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import javax.ws.rs.core.MediaType;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -46,7 +47,18 @@ class RequestLog {
         out.println(body);
     }
 
-    public static String xmlToPrettyString(String xmlString) {
+    public static String prettify(String mediaType, String rawContent) {
+        switch (mediaType) {
+            case MediaType.APPLICATION_JSON:
+                return jsonToPrettyString(rawContent) + "\n";
+            case MediaType.APPLICATION_XML:
+                return xmlToPrettyString(rawContent);
+            default:
+                throw new RuntimeException("Invalid media type: " + mediaType);
+        }
+    }
+
+    private static String xmlToPrettyString(String xmlString) {
         try {
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                     .parse(new InputSource(new ByteArrayInputStream(xmlString.getBytes("utf-8"))));
@@ -75,7 +87,7 @@ class RequestLog {
         }
     }
 
-    public static String jsonToPrettyString(String jsonString) {
+    private static String jsonToPrettyString(String jsonString) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Object json = mapper.readValue(jsonString, Object.class);

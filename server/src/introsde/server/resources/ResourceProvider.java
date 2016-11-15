@@ -56,9 +56,13 @@ public class ResourceProvider {
 
     public static Response getPerson(Double personId) {
         Producer<Response> producer = () -> {
-            Person personTO = PersonDAO.getPerson(personId);
-            personTO.setMeasureHistory(null);
-            return Response.status(Response.Status.OK).entity(personTO).build();
+            try {
+                Person personTO = PersonDAO.getPerson(personId);
+                personTO.setMeasureHistory(null);
+                return Response.status(Response.Status.OK).entity(personTO).build();
+            } catch (NoResultException ex) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+        }
         };
         return executeRequest(producer);
     }
@@ -69,11 +73,17 @@ public class ResourceProvider {
             Response response;
             try {
                 oldPersonTO = PersonDAO.getPerson(personId);
-                oldPersonTO.setFirstname(personTO.getFirstname());
-                oldPersonTO.setLastname(personTO.getLastname());
-                oldPersonTO.setBirthdate(personTO.getBirthdate());
+                if (personTO.getFirstname() != null) {
+                    oldPersonTO.setFirstname(personTO.getFirstname());
+                }
+                if (personTO.getLastname() != null) {
+                    oldPersonTO.setLastname(personTO.getLastname());
+                }
+                if (personTO.getBirthdate() != null) {
+                    oldPersonTO.setBirthdate(personTO.getBirthdate());
+                }
                 PersonDAO.updatePerson(personId, oldPersonTO);
-                response = Response.status(Response.Status.OK).build();
+                response = Response.status(Response.Status.OK).entity(PersonDAO.getPerson(personId)).build();
             } catch (NoResultException ex) {
                 personTO.setMeasureHistory(new MeasureHistory(null, new ArrayList<>()));
                 personTO.setHealthProfile(new HealthProfile(null, new HashSet<>()));
@@ -189,29 +199,6 @@ public class ResourceProvider {
                 }
                 response = Response.status(Response.Status.OK).entity(returnValue).build();
             } catch (NoResultException ex) {
-                response = Response.status(Response.Status.NOT_FOUND).build();
-            }
-            return response;
-        };
-        return executeRequest(producer);
-    }
-
-    //TODO DELETE
-    public static Response foo(Double id, String measureType) {
-        Producer<Response> producer = () -> {
-            Response response;
-            try {
-                List<MeasureType> values = new ArrayList<>();
-                values.add(new MeasureType(null, "mes1", Double.valueOf(42), "now"));
-                values.add(new MeasureType(null, "mes1", Double.valueOf(43), "now2"));
-                values.add(new MeasureType(null, "mes2", Double.valueOf(44), "now3"));
-                values.add(new MeasureType(null, "mes2", Double.valueOf(45), "now4"));
-                values.add(new MeasureType(null, "mes3", Double.valueOf(46), "now5"));
-                MeasureHistory history = new MeasureHistory(null, values);
-                Person personTO = new Person(null, "pinco", "pallino", "magic", new HealthProfile(null, new HashSet<>()), history);
-                Person person = PersonDAO.putPerson(personTO);
-                response = Response.status(Response.Status.OK).entity(person).build();
-            } catch (NoResultException | NullPointerException ex) {
                 response = Response.status(Response.Status.NOT_FOUND).build();
             }
             return response;

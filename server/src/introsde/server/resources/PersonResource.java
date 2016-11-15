@@ -67,15 +67,5 @@ public class PersonResource {
                                    MeasureType measure) {
         return ResourceProvider.postNewMeasure(personId, measureType, measure);
     }
-
-    //TODO DELETE
-    /*
-    @Path("{id}/{measureType}")
-    @POST
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response foo(@PathParam("id") Double id, @PathParam("measureType") String measureType) {
-        return ResourceProvider.foo(id, measureType);
-    }
-    */
 }
 
