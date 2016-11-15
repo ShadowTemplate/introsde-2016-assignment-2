@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="introsde-2016-assignment-2"
+         xmlns:ivy="antlib:org.apache.ivy.ant"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+         basedir=".">
+
+    <!-- Ant properties (software versions, workspace paths, etc.) -->
+    <property name="ivy.install.version" value="2.4.0"/>
+    <property name="ivy.jar.dir" value="${basedir}/ivy"/>
+    <property name="ivy.jar.file" value="${ivy.jar.dir}/ivy.jar"/>
+
+    <property name="client.basedir" value="${basedir}/client"/>
+    <property name="common.basedir" value="${basedir}/common"/>
+    <property name="server.basedir" value="${basedir}/server"/>
+
+    <property name="build.dir" value="build"/>
+    <property name="src.dir" value="src"/>
+    <property name="lib.dir" value="lib"/>
+
+    <property name="server.war.file" value="${server.basedir}/${build.dir}/server.war"/>
+    <property name="heroku.app" value="introsde-a2-server"/>
+
+
+    <path id="server.lib.path.id">
+        <fileset dir="${server.basedir}/${lib.dir}"/>
+        <fileset dir="${common.basedir}/${lib.dir}"/>
+    </path>
+
+    <path id="client.lib.path.id">
+        <fileset dir="${client.basedir}/${lib.dir}"/>
+        <fileset dir="${common.basedir}/${lib.dir}"/>
+    </path>
+
+    <!-- Targets required to download and configure Ivy -->
+    <target name="download-ivy" unless="skip.download" description="Download ivy">
+        <mkdir dir="${ivy.jar.dir}"/>
+        <get src="http://repo1.maven.org/maven2/org/apache/ivy/ivy/${ivy.install.version}/ivy-${ivy.install.version}.jar"
+             dest="${ivy.jar.file}" usetimestamp="true"/>
+    </target>
+
+    <target name="install-ivy" depends="download-ivy" description="Install ivy">
+        <path id="ivy.lib.path">
+            <fileset dir="${ivy.jar.dir}" includes="*.jar"/>
+        </path>
+        <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
+    </target>
+
+    <!-- Common targets -->
+    <target name="common.resolve" depends="install-ivy" description="Download ivy dependencies">
+        <ivy:resolve file="${common.basedir}/ivy.xml" resolveid="common-dependencies"/>
+    </target>
+
+    <target name="common.retrieve" depends="common.resolve" description="Retrieve ivy dependencies">
+        <ivy:retrieve pattern="${common.basedir}/${lib.dir}/[artifact]-[type]-[revision].[ext]" resolveid="common-dependencies"/>
+    </target>
+
+    <!-- Server targets -->
+    <target name="server.resolve" depends="install-ivy" description="Download ivy dependencies">
+        <ivy:resolve file="${server.basedir}/ivy.xml" resolveid="server-dependencies"/>
+    </target>
+
+    <target name="server.retrieve" depends="server.resolve" description="Retrieve ivy dependencies">
+        <ivy:retrieve pattern="${server.basedir}/${lib.dir}/[artifact]-[type]-[revision].[ext]" resolveid="server-dependencies"/>
+    </target>
+
+    <target name="server.init" depends="server.retrieve" description="Init server workspace">
+        <delete dir="${server.basedir}/${build.dir}"/>
+        <mkdir dir="${server.basedir}/${build.dir}"/>
+    </target>
+
+    <target name="server.compile" depends="server.init, common.retrieve" description="Compile server project">
+        <javac destdir="${server.basedir}/${build.dir}"
+               classpathref="server.lib.path.id" includeAntRuntime="false">
+            <src path="${server.basedir}/${src.dir}"/>
+            <src path="${common.basedir}/${src.dir}"/>
+        </javac>
+        <copy todir="${server.basedir}/${build.dir}" overwrite="true">
+            <fileset dir="${server.basedir}/${src.dir}">
+                <include name="*.xml"/>
+            </fileset>
+        </copy>
+        <copy todir="${server.basedir}/${build.dir}/META-INF">
+            <fileset dir="${server.basedir}/${src.dir}/META-INF"/>
+        </copy>
+    </target>
+
+    <target name="server.build-war" depends="server.compile" description="Build server project war">
+        <war destfile="${server.war.file}" webxml="${server.basedir}/web/WEB-INF/web.xml">
+            <classes dir="${server.basedir}/${build.dir}"/>
+            <lib dir="${server.basedir}/${lib.dir}"/>
+            <fileset dir="${server.basedir}/web">
+                <exclude name="WEB-INF"/>
+            </fileset>
+        </war>
+    </target>
+
+    <target name="server.deploy" depends="server.build-war" description="Deploy server project war on Heroku">
+        <exec executable="heroku">
+            <arg value="war:deploy"/>
+            <arg value="${server.war.file}"/>
+            <arg value="--app"/>
+            <arg value="${heroku.app}"/>
+        </exec>
+    </target>
+
+
+    <!-- Client targets -->
+    <target name="client.resolve" depends="install-ivy" description="Download ivy dependencies">
+        <ivy:resolve file="${client.basedir}/ivy.xml" resolveid="client-dependencies"/>
+    </target>
+
+    <target name="client.retrieve" depends="client.resolve" description="Retrieve ivy dependencies">
+        <ivy:retrieve pattern="${client.basedir}/${lib.dir}/[artifact]-[type]-[revision].[ext]" resolveid="client-dependencies"/>
+    </target>
+
+</project>
