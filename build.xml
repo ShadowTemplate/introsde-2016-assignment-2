@@ -47,20 +47,14 @@
     </target>
 
     <!-- Common targets -->
-    <target name="common.resolve" depends="install-ivy" description="Download ivy dependencies">
+    <target name="common.retrieve" description="Download ivy dependencies">
         <ivy:resolve file="${common.basedir}/ivy.xml" resolveid="common-dependencies"/>
-    </target>
-
-    <target name="common.retrieve" depends="common.resolve" description="Retrieve ivy dependencies">
         <ivy:retrieve pattern="${common.basedir}/${lib.dir}/[artifact]-[type]-[revision].[ext]" resolveid="common-dependencies"/>
     </target>
 
     <!-- Server targets -->
-    <target name="server.resolve" depends="install-ivy" description="Download ivy dependencies">
+    <target name="server.retrieve" description="Download ivy dependencies">
         <ivy:resolve file="${server.basedir}/ivy.xml" resolveid="server-dependencies"/>
-    </target>
-
-    <target name="server.retrieve" depends="server.resolve" description="Retrieve ivy dependencies">
         <ivy:retrieve pattern="${server.basedir}/${lib.dir}/[artifact]-[type]-[revision].[ext]" resolveid="server-dependencies"/>
     </target>
 
@@ -106,11 +100,8 @@
 
 
     <!-- Client targets -->
-    <target name="client.resolve" depends="install-ivy" description="Download ivy dependencies">
+    <target name="client.retrieve" description="Download ivy dependencies">
         <ivy:resolve file="${client.basedir}/ivy.xml" resolveid="client-dependencies"/>
-    </target>
-
-    <target name="client.retrieve" depends="client.resolve" description="Retrieve ivy dependencies">
         <ivy:retrieve pattern="${client.basedir}/${lib.dir}/[artifact]-[type]-[revision].[ext]" resolveid="client-dependencies"/>
     </target>
 

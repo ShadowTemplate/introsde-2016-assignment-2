@@ -3,7 +3,7 @@
     <dependencies>
         <dependency org="org.glassfish.jersey.containers" name="jersey-container-servlet" rev="2.24"/>
         <dependency org="org.glassfish.jersey.core" name="jersey-server" rev="2.24"/>
-        <dependency org="org.glassfish.jersey.containers" name="jersey-container-jdk-http" rev="2.24"/>
+        <!--<dependency org="org.glassfish.jersey.containers" name="jersey-container-jdk-http" rev="2.24"/>-->
 
         <!-- ?? -->
         <!--<dependency org="org.glassfish.jersey.core" name="jersey-common" rev="2.24"/>-->
@@ -14,8 +14,11 @@
         <dependency org="org.xerial" name="sqlite-jdbc" rev="3.15.1"/>
         <dependency org="org.projectlombok" name="lombok" rev="1.16.10"/>
 
+        <!-- TRY JUST JACKSON
         <dependency org="com.fasterxml.jackson.module" name="jackson-module-jaxb-annotations" rev="2.4.2"/>
         <dependency org="com.fasterxml.jackson.jaxrs" name="jackson-jaxrs-json-provider" rev="2.4.2"/>
+        -->
+        <dependency org="org.glassfish.jersey.media" name="jersey-media-json-jackson" rev="2.24"/>
 
         <!-- MY OLD DEPENDENCIES // TODO REMOVE
         <dependency org="org.glassfish.jersey.containers" name="jersey-container-servlet-core" rev="2.24"/>
