@@ -94,4 +94,22 @@ public class PersonDAO {
             return person.getHealthProfile().getMeasureTypes().stream().filter(sameMeasure).findFirst().get().buildTO();
         });
     }
+
+    public static void updateMeasureType(Double measureId, MeasureType measureTO) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("arg1", measureTO.getValue());
+        params.put("arg2", measureTO.getCreated());
+        params.put("arg3", measureId);
+        PersistenceManager.instance.updateQuery("UPDATE MeasureType m SET " +
+                "m.value = :arg1, " +
+                "m.created = :arg2 " +
+                "WHERE m.mid = :arg3", params);
+    }
+
+    public static void resetDB() {
+        PersistenceManager.instance.updateQuery("DELETE FROM HealthProfile p", new HashMap<>());
+        PersistenceManager.instance.updateQuery("DELETE FROM MeasureHistory h", new HashMap<>());
+        PersistenceManager.instance.updateQuery("DELETE FROM MeasureType m", new HashMap<>());
+        PersistenceManager.instance.updateQuery("DELETE FROM Person p", new HashMap<>());
+    }
 }

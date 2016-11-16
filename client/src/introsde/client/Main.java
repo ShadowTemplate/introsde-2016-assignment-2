@@ -22,8 +22,8 @@ import javax.xml.bind.JAXBException;
 
 public class Main {
 
-    //private static final String ENDPOINT = "http://localhost:8080/";
-    private static final String ENDPOINT = "https://introsde-a2-server.herokuapp.com/";
+    private static final String ENDPOINT = "http://localhost:8080/"; // TODO
+    //private static final String ENDPOINT = "https://introsde-a2-server.herokuapp.com/";
 
     private static final URI SERVER_URI = UriBuilder.fromUri(ENDPOINT).build();
     private static final WebTarget SERVER = ClientBuilder.newClient(new ClientConfig()).target(SERVER_URI);
@@ -55,21 +55,7 @@ public class Main {
         String url = "person";
         Response response = SERVER.path(url).request().accept(mediaType).get();
         response.bufferEntity();
-        List<Person> people;
-        switch (mediaType) {
-            case MediaType.APPLICATION_JSON:
-                Map<String, List<Person>> peopleMap = response.readEntity(new GenericType<Map<String, List<Person>>>() {
-                });
-                people = peopleMap.get("people");
-                break;
-            case MediaType.APPLICATION_XML:
-                people = response.readEntity(new GenericType<List<Person>>() {
-                });
-                break;
-            default:
-                throw new RuntimeException("Invalid media type: " + mediaType);
-        }
-
+        List<Person> people = unwrapPeopleList(response, mediaType);
         String result;
         if (people.size() >= 2) {
             result = "OK";
@@ -258,6 +244,7 @@ public class Main {
         List<MeasureType> newMeasureTypes = response.readEntity(new GenericType<List<MeasureType>>() {
         });
 
+        SHARED_VALUES.put("latest_added_mid", newMeasureTypes.get(newMeasureTypes.size() - 1).getMid());
         String result = measureTypes.size() + 1 == newMeasureTypes.size() ? "OK" : "ERROR";
         RequestLog requestLog = new RequestLog(9, HttpMethod.POST, url, mediaType, mediaType, result, status, body);
         System.out.println(requestLog + "\n");
@@ -266,26 +253,96 @@ public class Main {
 
     public static RequestLog request10(String mediaType) {
         System.out.println("Executing request10 with " + mediaType);
-        RequestLog requestLog = new RequestLog();
+        Double personId = (Double) SHARED_VALUES.get("first_person_id");
+        String measureValue = ((List<String>) SHARED_VALUES.get("measure_types")).get(0);
+        Double mid = (Double) SHARED_VALUES.get("latest_added_mid");
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String url = "person/" + personId + "/" + measureValue + "/" + mid;
+        MeasureType measureType = new MeasureType(mid, measureValue, 42d, date);
+        Entity<MeasureType> entity = Entity.entity(measureType, mediaType);
+        Response response = SERVER.path(url).request().accept(mediaType).header(HttpHeaders.CONTENT_TYPE, mediaType).put(entity);
+        int status = response.getStatus();
+
+        response = SERVER.path("person/" + personId + "/" + measureValue).request().accept(mediaType).get();
+        response.bufferEntity();
+        List<MeasureType> measureTypes = response.readEntity(new GenericType<List<MeasureType>>() {
+        });
+        String result = "ERROR";
+        for (MeasureType measure : measureTypes) {
+            result = (measure.getMid().equals(mid) && measure.getValue().equals(42d)) ? "OK" : result;
+        }
+
+        RequestLog requestLog = new RequestLog(10, HttpMethod.PUT, url, mediaType, mediaType, result,
+                status, "");
         System.out.println(requestLog + "\n");
         return requestLog;
     }
 
     public static RequestLog request11(String mediaType) {
         System.out.println("Executing request11 with " + mediaType);
-        RequestLog requestLog = new RequestLog();
+        String url = "person/" + SHARED_VALUES.get("first_person_id") + "/weight";
+        Date yesterdayDate = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
+        Date tomorrowDate = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
+        String yesterday = new SimpleDateFormat("yyyy-MM-dd").format(yesterdayDate);
+        String tomorrow = new SimpleDateFormat("yyyy-MM-dd").format(tomorrowDate);
+        Response response = SERVER.path(url).queryParam("before", tomorrow).queryParam("after", yesterday).request()
+                .accept(mediaType).get();
+        response.bufferEntity();
+        List<MeasureType> measuresList = response.readEntity(new GenericType<List<MeasureType>>() {
+        });
+        int status = response.getStatus();
+        String result = status == Response.Status.OK.getStatusCode() && !measuresList.isEmpty() ? "OK" : "ERROR";
+        String body = RequestLog.prettify(mediaType, response.readEntity(String.class));
+        RequestLog requestLog = new RequestLog(11, HttpMethod.GET,
+                url + "?before=" + tomorrow + "&after=" + yesterday,
+                mediaType, mediaType, result, status, body);
         System.out.println(requestLog + "\n");
         return requestLog;
     }
 
     public static RequestLog request12(String mediaType) {
         System.out.println("Executing request12 with " + mediaType);
-        RequestLog requestLog = new RequestLog();
+        String url = "person";
+        Response response = SERVER.path(url).queryParam("measureType", "weight").queryParam("max", 89).request()
+                .accept(mediaType).get();
+        response.bufferEntity();
+        List<Person> people = unwrapPeopleList(response, mediaType);
+        int status = response.getStatus();
+        String result = status == Response.Status.OK.getStatusCode() && !people.isEmpty() ? "OK" : "ERROR";
+        String body = RequestLog.prettify(mediaType, response.readEntity(String.class));
+        RequestLog requestLog = new RequestLog(12, HttpMethod.GET, url + "?measureType=weight&max=89",
+                mediaType, mediaType, result, status, body);
         System.out.println(requestLog + "\n");
         return requestLog;
     }
 
+    private static void deleteMe() { //TODO Delete
+        Response response = SERVER.path("person/reset/apache/tomcat/now").request().accept(MediaType.APPLICATION_JSON).get();
+        response.bufferEntity();
+    }
+
+    private static void cleanDatabase() {
+        deleteMe();
+        String mediaType = MediaType.APPLICATION_JSON;
+        System.out.println("Cleaning up the database...");
+        Response response = SERVER.path("person").request().accept(mediaType).get();
+        response.bufferEntity();
+        System.out.println(RequestLog.prettify(mediaType, response.readEntity(String.class)));
+        Map<String, List<Person>> peopleMap = response.readEntity(new GenericType<Map<String, List<Person>>>() {
+        });
+        for (Person person : peopleMap.get("people")) {
+            response = SERVER.path("person/" + person.getId()).request().accept(mediaType).delete();
+            response.bufferEntity();
+        }
+        response = SERVER.path("person").request().accept(mediaType).get();
+        response.bufferEntity();
+        System.out.println(RequestLog.prettify(mediaType, response.readEntity(String.class)));
+
+        System.out.println("Cleaning completed.");
+    }
+
     private static void initDatabase() {
+        cleanDatabase();
         String mediaType = MediaType.APPLICATION_JSON;
         System.out.println("Going to init database...");
 
@@ -304,14 +361,16 @@ public class Main {
         Map<String, List<Person>> peopleMap = response.readEntity(new GenericType<Map<String, List<Person>>>() {
         });
 
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        Date yesterdayDate = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
+        String yesterday = new SimpleDateFormat("yyyy-MM-dd").format(yesterdayDate);
+        String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         for (Person person : peopleMap.get("people")) {
             Double id = person.getId();
-            for(int i = 0; i < 3; i++) {
-                Entity<MeasureType> entity = Entity.entity(new MeasureType(null, null, 70d + i, date), mediaType);
+            for (int i = 0; i < 3; i++) {
+                Entity<MeasureType> entity = Entity.entity(new MeasureType(null, null, 88d + i, yesterday), mediaType);
                 response = SERVER.path("person/" + id + "/weight").request().accept(mediaType).post(entity);
                 response.bufferEntity();
-                entity = Entity.entity(new MeasureType(null, null, 1.8d + (((double) i)/5), date), mediaType);
+                entity = Entity.entity(new MeasureType(null, null, 1.8d + (((double) i) / 5), today), mediaType);
                 response = SERVER.path("person/" + id + "/height").request().accept(mediaType).post(entity);
                 response.bufferEntity();
             }
@@ -324,22 +383,17 @@ public class Main {
         System.out.println("Initialization completed.\n");
     }
 
-    private static void cleanDatabase() {
-        String mediaType = MediaType.APPLICATION_JSON;
-        System.out.println("Cleaning up the database...");
-        Response response = SERVER.path("person").request().accept(mediaType).get();
-        response.bufferEntity();
-        System.out.println(RequestLog.prettify(mediaType, response.readEntity(String.class)));
-        Map<String, List<Person>> peopleMap = response.readEntity(new GenericType<Map<String, List<Person>>>() {
-        });
-        for (Person person : peopleMap.get("people")) {
-            response = SERVER.path("person/" + person.getId()).request().accept(mediaType).delete();
-            response.bufferEntity();
+    private static List<Person> unwrapPeopleList(Response response, String mediaType) {
+        switch (mediaType) {
+            case MediaType.APPLICATION_JSON:
+                Map<String, List<Person>> peopleMap = response.readEntity(new GenericType<Map<String, List<Person>>>() {
+                });
+                return peopleMap.get("people");
+            case MediaType.APPLICATION_XML:
+                return response.readEntity(new GenericType<List<Person>>() {
+                });
+            default:
+                throw new RuntimeException("Invalid media type: " + mediaType);
         }
-        response = SERVER.path("person").request().accept(mediaType).get();
-        response.bufferEntity();
-        System.out.println(RequestLog.prettify(mediaType, response.readEntity(String.class)));
-
-        System.out.println("Cleaning completed.");
     }
 }

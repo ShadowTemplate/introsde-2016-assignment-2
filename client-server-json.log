@@ -1,0 +1,215 @@
+Request #1: GET person Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 200
+{
+  "people" : [ {
+    "id" : 75.0,
+    "firstname" : "Alan",
+    "lastname" : "Turing",
+    "birthdate" : "1912-06-23",
+    "healthProfile" : {
+      "measureTypes" : [ {
+        "mid" : 316.0,
+        "measure" : "weight",
+        "value" : 90.0,
+        "created" : "2016-11-15"
+      }, {
+        "mid" : 317.0,
+        "measure" : "height",
+        "value" : 2.2,
+        "created" : "2016-11-16"
+      } ]
+    }
+  }, {
+    "id" : 76.0,
+    "firstname" : "Christopher",
+    "lastname" : "McCandless",
+    "birthdate" : "1968-02-12",
+    "healthProfile" : {
+      "measureTypes" : [ {
+        "mid" : 322.0,
+        "measure" : "weight",
+        "value" : 90.0,
+        "created" : "2016-11-15"
+      }, {
+        "mid" : 323.0,
+        "measure" : "height",
+        "value" : 2.2,
+        "created" : "2016-11-16"
+      } ]
+    }
+  } ]
+}
+
+Request #2: GET person/75.0 Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 200
+{
+  "id" : 75.0,
+  "firstname" : "Alan",
+  "lastname" : "Turing",
+  "birthdate" : "1912-06-23",
+  "healthProfile" : {
+    "measureTypes" : [ {
+      "mid" : 316.0,
+      "measure" : "weight",
+      "value" : 90.0,
+      "created" : "2016-11-15"
+    }, {
+      "mid" : 317.0,
+      "measure" : "height",
+      "value" : 2.2,
+      "created" : "2016-11-16"
+    } ]
+  }
+}
+
+Request #3: PUT person/75.0 Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 200
+{
+  "id" : 75.0,
+  "firstname" : "NewPersonName",
+  "lastname" : "Turing",
+  "birthdate" : "1912-06-23",
+  "healthProfile" : {
+    "measureTypes" : [ {
+      "mid" : 316.0,
+      "measure" : "weight",
+      "value" : 90.0,
+      "created" : "2016-11-15"
+    }, {
+      "mid" : 317.0,
+      "measure" : "height",
+      "value" : 2.2,
+      "created" : "2016-11-16"
+    } ]
+  },
+  "measureHistory" : {
+    "measureTypes" : [ {
+      "mid" : 312.0,
+      "measure" : "weight",
+      "value" : 88.0,
+      "created" : "2016-11-15"
+    }, {
+      "mid" : 313.0,
+      "measure" : "height",
+      "value" : 1.8,
+      "created" : "2016-11-16"
+    }, {
+      "mid" : 314.0,
+      "measure" : "weight",
+      "value" : 89.0,
+      "created" : "2016-11-15"
+    }, {
+      "mid" : 315.0,
+      "measure" : "height",
+      "value" : 2.0,
+      "created" : "2016-11-16"
+    } ]
+  }
+}
+
+Request #4: POST person Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 201
+{
+  "id" : 78.0,
+  "firstname" : "Chuck",
+  "lastname" : "Norris",
+  "birthdate" : "1945-01-01",
+  "healthProfile" : {
+    "measureTypes" : [ {
+      "mid" : 326.0,
+      "measure" : "weight",
+      "value" : 78.9
+    }, {
+      "mid" : 327.0,
+      "measure" : "height",
+      "value" : 172.0
+    } ]
+  },
+  "measureHistory" : {
+    "measureTypes" : [ ]
+  }
+}
+
+Request #5: DELETE person/78.0 Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 404
+
+Request #6: GET /measureTypes Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 200
+{
+  "measureType" : [ "weight", "height" ]
+}
+
+Request #7: GET person/76.0/height Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 200
+[ {
+  "mid" : 319.0,
+  "measure" : "height",
+  "value" : 1.8,
+  "created" : "2016-11-16"
+}, {
+  "mid" : 321.0,
+  "measure" : "height",
+  "value" : 2.0,
+  "created" : "2016-11-16"
+} ]
+
+Request #8: GET person/76.0/height/319.0 Accept: application/json Content-type: application/json
+=> Result: ERROR
+=> HTTP STATUS: 404
+
+Request #9: POST person/75.0/weight Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 200
+{
+  "mid" : 329.0,
+  "measure" : "weight",
+  "value" : 72.0,
+  "created" : "2011-12-09"
+}
+
+Request #10: PUT person/75.0/weight/328.0 Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 200
+
+Request #11: GET person/75.0/weight?before=2016-11-17&after=2016-11-15 Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 200
+[ {
+  "mid" : 328.0,
+  "measure" : "weight",
+  "value" : 42.0,
+  "created" : "2016-11-16"
+} ]
+
+Request #12: GET person?measureType=weight&max=89 Accept: application/json Content-type: application/json
+=> Result: OK
+=> HTTP STATUS: 200
+{
+  "people" : [ {
+    "id" : 75.0,
+    "firstname" : "NewPersonName",
+    "lastname" : "Turing",
+    "birthdate" : "1912-06-23",
+    "healthProfile" : {
+      "measureTypes" : [ {
+        "mid" : 317.0,
+        "measure" : "height",
+        "value" : 2.2,
+        "created" : "2016-11-16"
+      }, {
+        "mid" : 329.0,
+        "measure" : "weight",
+        "value" : 72.0,
+        "created" : "2011-12-09"
+      } ]
+    }
+  } ]
+}
+

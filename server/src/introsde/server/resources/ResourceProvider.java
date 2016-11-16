@@ -10,7 +10,10 @@ import javax.persistence.NoResultException;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ResourceProvider {
@@ -25,33 +28,50 @@ public class ResourceProvider {
         }
     }
 
-    public static Response listPeople(String mediaType) {
+    private static Response wrapPeopleList(String mediaType, List<Person> peopleTO) {
+        for (Person personTO : peopleTO) {
+            personTO.setMeasureHistory(null);
+        }
+        Object returnValue;
+        switch (mediaType) {
+            case MediaType.APPLICATION_JSON:
+                Map<String, List<Person>> peopleMap = new HashMap<>();
+                peopleMap.put("people", peopleTO);
+                returnValue = peopleMap;
+                break;
+            case MediaType.APPLICATION_XML:
+                returnValue = new GenericEntity<List<Person>>(peopleTO) {
+                };
+                break;
+            default:
+                throw new RuntimeException("Invalid media type: " + mediaType);
+        }
+        return Response.status(Response.Status.OK).entity(returnValue).build();
+    }
+
+    static Response listPeople(String mediaType) {
+        return executeRequest(() -> wrapPeopleList(mediaType, PersonDAO.listPeople()));
+    }
+
+    static Response listPeopleWithProperty(String mediaType, String measureType, Double min, Double max) {
         Producer<Response> producer = () -> {
             List<Person> peopleTO = PersonDAO.listPeople();
-            for (Person personTO : peopleTO) {
-                personTO.setMeasureHistory(null);
-            }
-
-            Object returnValue;
-            switch (mediaType) {
-                case MediaType.APPLICATION_JSON:
-                    Map<String, List<Person>> peopleMap = new HashMap<>();
-                    peopleMap.put("people", peopleTO);
-                    returnValue = peopleMap;
-                    break;
-                case MediaType.APPLICATION_XML:
-                    returnValue = new GenericEntity<List<Person>>(peopleTO) {
-                    };
-                    break;
-                default:
-                    throw new RuntimeException("Invalid media type: " + mediaType);
-            }
-            return Response.status(Response.Status.OK).entity(returnValue).build();
+            Predicate<Person> filterByProperty = person -> {
+                for (MeasureType measure : person.getHealthProfile().getMeasureTypes()) {
+                    if (measure.getMeasure().equals(measureType) && ((min != null && measure.getValue() < min) ||
+                            (max != null && measure.getValue() > max))) {
+                        return false;
+                    }
+                }
+                return true;
+            };
+            List<Person> filteredPeopleTO = peopleTO.stream().filter(filterByProperty).collect(Collectors.toList());
+            return wrapPeopleList(mediaType, filteredPeopleTO);
         };
         return executeRequest(producer);
     }
 
-    public static Response getPerson(Double personId) {
+    static Response getPerson(Double personId) {
         Producer<Response> producer = () -> {
             try {
                 Person personTO = PersonDAO.getPerson(personId);
@@ -59,12 +79,12 @@ public class ResourceProvider {
                 return Response.status(Response.Status.OK).entity(personTO).build();
             } catch (NoResultException ex) {
                 return Response.status(Response.Status.NOT_FOUND).build();
-        }
+            }
         };
         return executeRequest(producer);
     }
 
-    public static Response putPerson(Double personId, Person personTO) {
+    static Response putPerson(Double personId, Person personTO) {
         Producer<Response> producer = () -> {
             Person oldPersonTO;
             Response response;
@@ -92,7 +112,7 @@ public class ResourceProvider {
         return executeRequest(producer);
     }
 
-    public static Response postPerson(Person personTO) {
+    static Response postPerson(Person personTO) {
         Producer<Response> producer = () -> {
             personTO.setId(null);
             if (personTO.getMeasureHistory() == null || personTO.getMeasureHistory().getMeasureTypes() == null) {
@@ -107,7 +127,7 @@ public class ResourceProvider {
         return executeRequest(producer);
     }
 
-    public static Response deletePerson(Double personId) {
+    static Response deletePerson(Double personId) {
         Producer<Response> producer = () -> {
             Response response;
             try {
@@ -122,7 +142,7 @@ public class ResourceProvider {
         return executeRequest(producer);
     }
 
-    public static Response getMeasureHistory(Double personId, String measureType) {
+    static Response getMeasureHistory(Double personId, String measureType) {
         Producer<Response> producer = () -> {
             Response response;
             try {
@@ -140,7 +160,39 @@ public class ResourceProvider {
         return executeRequest(producer);
     }
 
-    public static Response getCurrentMeasure(Double personId, String measureType, Double measureId) {
+    private static Date toDate(String date) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            return dateFormat.parse(date);
+        } catch (ParseException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static Response getMeasureHistoryInRange(Double personId, String measureType, String before, String after) {
+        Producer<Response> producer = () -> {
+            Response response;
+            try {
+                Date beforeDate = toDate(before), afterDate = toDate(after);
+                Predicate<MeasureType> filterRange = m -> {
+                    Date mDate = toDate(m.getCreated());
+                    return m.getMeasure().equals(measureType) && mDate.before(beforeDate) && mDate.after(afterDate);
+                };
+                Person personTO = PersonDAO.getPerson(personId);
+                List<MeasureType> measuresList = personTO.getMeasureHistory().getMeasureTypes().stream()
+                        .filter(filterRange).collect(Collectors.toList());
+                Object returnValue = new GenericEntity<List<MeasureType>>(measuresList) {
+                };
+                response = Response.status(Response.Status.OK).entity(returnValue).build();
+            } catch (NoResultException | NullPointerException ex) {
+                response = Response.status(Response.Status.NOT_FOUND).build();
+            }
+            return response;
+        };
+        return executeRequest(producer);
+    }
+
+    static Response getCurrentMeasure(Double personId, String measureType, Double measureId) {
         Producer<Response> producer = () -> {
             Response response;
             try {
@@ -163,7 +215,7 @@ public class ResourceProvider {
         return executeRequest(producer);
     }
 
-    public static Response postNewMeasure(Double personId, String measureType, MeasureType measure) {
+    static Response postNewMeasure(Double personId, String measureType, MeasureType measure) {
         Producer<Response> producer = () -> {
             Response response;
             try {
@@ -179,7 +231,7 @@ public class ResourceProvider {
         return executeRequest(producer);
     }
 
-    public static Response listMeasureTypes(String mediaType) {
+    static Response listMeasureTypes(String mediaType) {
         Producer<Response> producer = () -> {
             Response response;
             try {
@@ -205,5 +257,26 @@ public class ResourceProvider {
             return response;
         };
         return executeRequest(producer);
+    }
+
+    static Response updateMeasureValue(Double personId, String measureType, Double measureId, MeasureType measureTO) {
+        Producer<Response> producer = () -> {
+            Response response;
+            try {
+                measureTO.setMid(measureId);
+                measureTO.setMeasure(measureType);
+                PersonDAO.updateMeasureType(measureId, measureTO);
+                return Response.status(Response.Status.OK).build();
+            } catch (NoResultException | NullPointerException ex) {
+                response = Response.status(Response.Status.NOT_FOUND).build();
+            }
+            return response;
+        };
+        return executeRequest(producer);
+    }
+
+    static Response resetTomcat() { //TODO DELETE
+        PersonDAO.resetDB();
+        return Response.status(Response.Status.OK).build();
     }
 }
