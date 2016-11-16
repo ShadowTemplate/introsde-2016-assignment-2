@@ -1,10 +1,7 @@
 package introsde.server.resources;
 
+import introsde.common.to.*;
 import introsde.server.dao.MeasureTypeDAO;
-import introsde.common.to.HealthProfile;
-import introsde.common.to.MeasureHistory;
-import introsde.common.to.MeasureType;
-import introsde.common.to.Person;
 import introsde.server.dao.PersonDAO;
 import org.glassfish.jersey.internal.util.Producer;
 
@@ -151,9 +148,13 @@ public class ResourceProvider {
                 List<MeasureType> measuresList = personTO.getHealthProfile().getMeasureTypes().stream()
                         .filter(m -> m.getMeasure().equals(measureType) && m.getMid().equals(measureId))
                         .collect(Collectors.toList());
-                Object returnValue = new GenericEntity<List<MeasureType>>(measuresList) {
-                };
-                response = Response.status(Response.Status.OK).entity(returnValue).build();
+                if (measuresList.isEmpty()) {
+                    throw new NoResultException();
+                } else {
+                    Object returnValue = new GenericEntity<MeasureType>(measuresList.get(0)) {
+                    };
+                    response = Response.status(Response.Status.OK).entity(returnValue).build();
+                }
             } catch (NoResultException | NullPointerException ex) {
                 response = Response.status(Response.Status.NOT_FOUND).build();
             }

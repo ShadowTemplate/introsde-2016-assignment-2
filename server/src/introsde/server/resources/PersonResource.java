@@ -12,6 +12,7 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response listPeople(@HeaderParam(HttpHeaders.ACCEPT) String mediaType) {
+        System.out.println("/person GET");
         return ResourceProvider.listPeople(mediaType);
     }
 
@@ -19,6 +20,7 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getPerson(@PathParam("id") Double personId){
+        System.out.println("/person/" + personId + " GET");
         return ResourceProvider.getPerson(personId);
     }
 
@@ -27,6 +29,8 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response putPerson(@PathParam("id") Double personId, Person person) {
+        System.out.println("/person/" + personId + " PUT");
+        System.out.println("Input param:\n" + person);
         return ResourceProvider.putPerson(personId, person);
     }
 
@@ -34,6 +38,8 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response postPerson(Person person) {
+        System.out.println("/person POST");
+        System.out.println("Input param:\n" + person);
         return ResourceProvider.postPerson(person);
     }
 
@@ -41,6 +47,7 @@ public class PersonResource {
     @DELETE
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response deletePerson(@PathParam("id") Double personId) {
+        System.out.println("/person/" + personId + " DELETE");
         return ResourceProvider.deletePerson(personId);
     }
 
@@ -48,6 +55,7 @@ public class PersonResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getMeasureHistory(@PathParam("id") Double personId, @PathParam("measureType") String measureType) {
+        System.out.println("/person/" + personId + "/" + measureType + " GET");
         return ResourceProvider.getMeasureHistory(personId, measureType);
     }
 
@@ -56,6 +64,7 @@ public class PersonResource {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getCurrentMeasure(@PathParam("id") Double personId, @PathParam("measureType") String measureType,
                                       @PathParam("mid") Double measureId) {
+        System.out.println("/person/" + personId + "/" + measureType + "/" + measureId + " GET");
         return ResourceProvider.getCurrentMeasure(personId, measureType, measureId);
     }
 
@@ -65,6 +74,8 @@ public class PersonResource {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response postNewMeasure(@PathParam("id") Double personId, @PathParam("measureType") String measureType,
                                    MeasureType measure) {
+        System.out.println("/person/" + personId + "/" + measureType + " POST");
+        System.out.println("Input param:\n" + measure);
         return ResourceProvider.postNewMeasure(personId, measureType, measure);
     }
 }

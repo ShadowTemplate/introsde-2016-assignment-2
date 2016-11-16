@@ -25,10 +25,10 @@ public class TOFactory {
 
     public static introsde.common.to.MeasureType buildTO(MeasureType measureType) {
         introsde.common.to.MeasureType measureTypeTO = new introsde.common.to.MeasureType();
-        measureType.setMid(measureType.getMid());
-        measureType.setMeasure(measureType.getMeasure());
-        measureType.setValue(measureType.getValue());
-        measureType.setCreated(measureType.getCreated());
+        measureTypeTO.setMid(measureType.getMid());
+        measureTypeTO.setMeasure(measureType.getMeasure());
+        measureTypeTO.setValue(measureType.getValue());
+        measureTypeTO.setCreated(measureType.getCreated());
         return measureTypeTO;
     }
 

@@ -1,4 +1,4 @@
-package introsde.server.resources;
+package introsde.common.to;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;

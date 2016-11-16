@@ -22,13 +22,14 @@ public enum PersistenceManager {
 
     public <T> void persist(T object) {
         runInTransaction(entityManager -> {
-            System.out.println("\n\nGoing to persist: " + object + "\n");
+            System.out.println("\nGoing to persist: " + object + "\n");
             entityManager.persist(object);
         });
     }
 
     public <T> void remove(T object) {
         runInTransaction(entityManager -> {
+            System.out.println("\nGoing to remove: " + object + "\n");
             T mergedObject = entityManager.merge(object);
             entityManager.remove(mergedObject);
         });
@@ -36,12 +37,14 @@ public enum PersistenceManager {
 
     public Query createQuery(String query) { //TODO TRY TO REMOVE
         return runInTransaction(entityManager -> {
+            System.out.println("\nGoing to run query: " + query + "\n");
             return entityManager.createQuery(query);
         });
     }
 
     public Integer updateQuery(String query, Map<String, Object> parameters) {
         return runInTransaction(entityManager -> {
+            System.out.println("\nGoing to run query: " + query+ "\n params: " + parameters + "\n");
             Query q = entityManager.createQuery(query);
             for (Map.Entry<String, Object> param : parameters.entrySet()) {
                 q.setParameter(param.getKey(), param.getValue());

@@ -14,6 +14,7 @@ public class MeasureTypeResource {
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response listMeasureTypes(@HeaderParam(HttpHeaders.ACCEPT) String mediaType) {
+        System.out.println("/measureTypes GET");
         return ResourceProvider.listMeasureTypes(mediaType);
     }
 }
