@@ -22,8 +22,8 @@ import javax.xml.bind.JAXBException;
 
 public class Main {
 
-    private static final String ENDPOINT = "http://localhost:8080/"; // TODO
-    //private static final String ENDPOINT = "https://introsde-a2-server.herokuapp.com/";
+    //private static final String ENDPOINT = "http://localhost:8080/"; // TODO
+    private static final String ENDPOINT = "https://introsde-a2-server.herokuapp.com/";
 
     private static final URI SERVER_URI = UriBuilder.fromUri(ENDPOINT).build();
     private static final WebTarget SERVER = ClientBuilder.newClient(new ClientConfig()).target(SERVER_URI);
@@ -34,7 +34,7 @@ public class Main {
         System.out.println("Server URL: " + ENDPOINT + "\n");
         try (PrintWriter xmlOut = new PrintWriter(new FileOutputStream(new File("client-server-xml.log")));
              PrintWriter jsonOut = new PrintWriter(new FileOutputStream(new File("client-server-json.log")))) {
-            initDatabase();
+            populateDatabase();
             for (int i = 1; i <= 12; i++) {
                 Method method = Main.class.getMethod("request" + i, String.class);
                 RequestLog response = (RequestLog) method.invoke(null, MediaType.APPLICATION_XML);
@@ -42,7 +42,7 @@ public class Main {
                 response = (RequestLog) method.invoke(null, MediaType.APPLICATION_JSON);
                 response.log(jsonOut);
             }
-            cleanDatabase();
+            initDatabase();
         } catch (Exception ex) {
             System.err.println("An error occurred while executing request.");
             System.err.println(ex.getMessage());
@@ -316,35 +316,21 @@ public class Main {
         return requestLog;
     }
 
-    private static void deleteMe() { //TODO Delete
-        Response response = SERVER.path("person/reset/apache/tomcat/now").request().accept(MediaType.APPLICATION_JSON).get();
-        response.bufferEntity();
-    }
-
-    private static void cleanDatabase() {
-        deleteMe();
+    private static void initDatabase() {
         String mediaType = MediaType.APPLICATION_JSON;
         System.out.println("Cleaning up the database...");
-        Response response = SERVER.path("person").request().accept(mediaType).get();
+        Response response = SERVER.path("init").request().accept(MediaType.APPLICATION_JSON).get();
         response.bufferEntity();
-        System.out.println(RequestLog.prettify(mediaType, response.readEntity(String.class)));
-        Map<String, List<Person>> peopleMap = response.readEntity(new GenericType<Map<String, List<Person>>>() {
-        });
-        for (Person person : peopleMap.get("people")) {
-            response = SERVER.path("person/" + person.getId()).request().accept(mediaType).delete();
-            response.bufferEntity();
-        }
         response = SERVER.path("person").request().accept(mediaType).get();
         response.bufferEntity();
         System.out.println(RequestLog.prettify(mediaType, response.readEntity(String.class)));
-
         System.out.println("Cleaning completed.");
     }
 
-    private static void initDatabase() {
-        cleanDatabase();
+    private static void populateDatabase() {
+        initDatabase();
         String mediaType = MediaType.APPLICATION_JSON;
-        System.out.println("Going to init database...");
+        System.out.println("Going to populate the database...");
 
         List<Person> newPeople = new ArrayList<>();
         newPeople.add(new Person(null, "Alan", "Turing", "1912-06-23", null, null));
@@ -379,7 +365,6 @@ public class Main {
         response = SERVER.path("person").request().accept(mediaType).get();
         response.bufferEntity();
         System.out.println(RequestLog.prettify(mediaType, response.readEntity(String.class)));
-
         System.out.println("Initialization completed.\n");
     }
 

@@ -12,18 +12,19 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class PersonDAO {
+public class EntityDAO {
 
     public static List<Person> listPeople() {
-        List<introsde.server.model.Person> people = PersistenceManager.instance.createQuery("SELECT p FROM Person p").getResultList();
+        String query = "SELECT p FROM Person p";
+        List<introsde.server.model.Person> people = PersistenceManager.instance.listResultQuery(query);
         return people.stream().map(introsde.server.model.Person::buildTO).collect(Collectors.toList());
     }
 
     public static Person getPerson(Double personId) {
-        Query query = PersistenceManager.instance.createQuery("SELECT p FROM Person p WHERE p.id=:arg1");
-        query.setParameter("arg1", personId);
-        introsde.server.model.Person person = (introsde.server.model.Person) query.getSingleResult();
-        return person.buildTO();
+        String query = "SELECT p FROM Person p WHERE p.id=:arg1";
+        Map<String, Object> params = new HashMap<>();
+        params.put("arg1", personId);
+        return ((introsde.server.model.Person) PersistenceManager.instance.singleResultQuery(query, params)).buildTO();
     }
 
     public static Person putPerson(Person personTO) {
@@ -38,16 +39,13 @@ public class PersonDAO {
     }
 
     public static void updatePerson(Double personId, Person oldPersonTO) {
+        String query = "UPDATE Person p SET p.firstname = :arg1, p.lastname = :arg2, p.birthdate = :arg3 WHERE p.id = :arg4";
         Map<String, Object> params = new HashMap<>();
         params.put("arg1", oldPersonTO.getFirstname());
         params.put("arg2", oldPersonTO.getLastname());
         params.put("arg3", oldPersonTO.getBirthdate());
         params.put("arg4", personId);
-        PersistenceManager.instance.updateQuery("UPDATE Person p SET " +
-                "p.firstname = :arg1, " +
-                "p.lastname = :arg2, " +
-                "p.birthdate = :arg3 " +
-                "WHERE p.id = :arg4", params);
+        PersistenceManager.instance.updateQuery(query, params);
     }
 
     public static MeasureType addMeasure(Double personId, MeasureType measureType) {
@@ -55,16 +53,6 @@ public class PersonDAO {
             Query query = entityManager.createQuery("SELECT p FROM Person p WHERE p.id=:arg1");
             query.setParameter("arg1", personId);
             introsde.server.model.Person person = (introsde.server.model.Person) query.getSingleResult();
-
-            System.out.println("\nAt first person: \n" + person);
-            System.out.println("HP");
-            for (introsde.server.model.MeasureType type : person.getHealthProfile().getMeasureTypes()) {
-                System.out.println(type);
-            }
-            System.out.println("History");
-            for (introsde.server.model.MeasureType type : person.getMeasureHistory().getMeasureTypes()) {
-                System.out.println(type);
-            }
 
             Predicate<? super introsde.server.model.MeasureType> sameMeasure =
                     (Predicate<introsde.server.model.MeasureType>) measure ->
@@ -75,41 +63,33 @@ public class PersonDAO {
                     .orElse(null);
             if (oldMeasure != null) {
                 currentMeasures.remove(oldMeasure);
-                //oldMeasure.setMid(null);
                 person.getMeasureHistory().getMeasureTypes().add(oldMeasure);
             }
 
             currentMeasures.add(new introsde.server.model.MeasureType(measureType));
-
-            System.out.println("\nGoing to persist: \n" + person);
-            for (introsde.server.model.MeasureType type : person.getHealthProfile().getMeasureTypes()) {
-                System.out.println(type);
-            }
-            System.out.println("History");
-            for (introsde.server.model.MeasureType type : person.getMeasureHistory().getMeasureTypes()) {
-                System.out.println(type);
-            }
-
             entityManager.persist(person);
             return person.getHealthProfile().getMeasureTypes().stream().filter(sameMeasure).findFirst().get().buildTO();
         });
     }
 
     public static void updateMeasureType(Double measureId, MeasureType measureTO) {
+        String query = "UPDATE MeasureType m SET m.value = :arg1, m.created = :arg2 WHERE m.mid = :arg3";
         Map<String, Object> params = new HashMap<>();
         params.put("arg1", measureTO.getValue());
         params.put("arg2", measureTO.getCreated());
         params.put("arg3", measureId);
-        PersistenceManager.instance.updateQuery("UPDATE MeasureType m SET " +
-                "m.value = :arg1, " +
-                "m.created = :arg2 " +
-                "WHERE m.mid = :arg3", params);
+        PersistenceManager.instance.updateQuery(query, params);
     }
 
-    public static void resetDB() {
-        PersistenceManager.instance.updateQuery("DELETE FROM HealthProfile p", new HashMap<>());
-        PersistenceManager.instance.updateQuery("DELETE FROM MeasureHistory h", new HashMap<>());
-        PersistenceManager.instance.updateQuery("DELETE FROM MeasureType m", new HashMap<>());
-        PersistenceManager.instance.updateQuery("DELETE FROM Person p", new HashMap<>());
+    public static List<String> listMeasure() {
+        String query = "SELECT DISTINCT t.measure FROM MeasureType t";
+        return PersistenceManager.instance.listResultQuery(query);
+    }
+
+    public static void initDatabase() {
+        PersistenceManager.instance.updateQuery("DELETE FROM HealthProfile p");
+        PersistenceManager.instance.updateQuery("DELETE FROM MeasureHistory h");
+        PersistenceManager.instance.updateQuery("DELETE FROM MeasureType m");
+        PersistenceManager.instance.updateQuery("DELETE FROM Person p");
     }
 }

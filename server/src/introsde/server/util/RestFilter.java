@@ -8,7 +8,7 @@ import java.io.IOException;
 @WebFilter(urlPatterns = "/*")
 public class RestFilter implements Filter {
 
-    private String[] restPatterns = new String[] { "/person", "/measureTypes"};
+    private String[] restPatterns = new String[] { "/person", "/measureTypes", "/init"};
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,

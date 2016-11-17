@@ -1,8 +1,7 @@
 package introsde.server.resources;
 
 import introsde.common.to.*;
-import introsde.server.dao.MeasureTypeDAO;
-import introsde.server.dao.PersonDAO;
+import introsde.server.dao.EntityDAO;
 import org.glassfish.jersey.internal.util.Producer;
 
 
@@ -16,7 +15,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ResourceProvider {
+public class ResourceDispatcher {
 
     private static Response executeRequest(Producer<Response> producer) {
         try {
@@ -50,12 +49,12 @@ public class ResourceProvider {
     }
 
     static Response listPeople(String mediaType) {
-        return executeRequest(() -> wrapPeopleList(mediaType, PersonDAO.listPeople()));
+        return executeRequest(() -> wrapPeopleList(mediaType, EntityDAO.listPeople()));
     }
 
     static Response listPeopleWithProperty(String mediaType, String measureType, Double min, Double max) {
         Producer<Response> producer = () -> {
-            List<Person> peopleTO = PersonDAO.listPeople();
+            List<Person> peopleTO = EntityDAO.listPeople();
             Predicate<Person> filterByProperty = person -> {
                 for (MeasureType measure : person.getHealthProfile().getMeasureTypes()) {
                     if (measure.getMeasure().equals(measureType) && ((min != null && measure.getValue() < min) ||
@@ -74,7 +73,7 @@ public class ResourceProvider {
     static Response getPerson(Double personId) {
         Producer<Response> producer = () -> {
             try {
-                Person personTO = PersonDAO.getPerson(personId);
+                Person personTO = EntityDAO.getPerson(personId);
                 personTO.setMeasureHistory(null);
                 return Response.status(Response.Status.OK).entity(personTO).build();
             } catch (NoResultException ex) {
@@ -89,7 +88,7 @@ public class ResourceProvider {
             Person oldPersonTO;
             Response response;
             try {
-                oldPersonTO = PersonDAO.getPerson(personId);
+                oldPersonTO = EntityDAO.getPerson(personId);
                 if (personTO.getFirstname() != null) {
                     oldPersonTO.setFirstname(personTO.getFirstname());
                 }
@@ -99,12 +98,12 @@ public class ResourceProvider {
                 if (personTO.getBirthdate() != null) {
                     oldPersonTO.setBirthdate(personTO.getBirthdate());
                 }
-                PersonDAO.updatePerson(personId, oldPersonTO);
-                response = Response.status(Response.Status.OK).entity(PersonDAO.getPerson(personId)).build();
+                EntityDAO.updatePerson(personId, oldPersonTO);
+                response = Response.status(Response.Status.OK).entity(EntityDAO.getPerson(personId)).build();
             } catch (NoResultException ex) {
                 personTO.setMeasureHistory(new MeasureHistory(null, new ArrayList<>()));
                 personTO.setHealthProfile(new HealthProfile(null, new HashSet<>()));
-                PersonDAO.putPerson(personTO);
+                EntityDAO.putPerson(personTO);
                 response = Response.status(Response.Status.CREATED).entity(personTO).build();
             }
             return response;
@@ -121,7 +120,7 @@ public class ResourceProvider {
             if (personTO.getHealthProfile() == null || personTO.getHealthProfile().getMeasureTypes() == null) {
                 personTO.setHealthProfile(new HealthProfile(null, new HashSet<>()));
             }
-            Person newPersonTO = PersonDAO.putPerson(personTO);
+            Person newPersonTO = EntityDAO.putPerson(personTO);
             return Response.status(Response.Status.CREATED).entity(newPersonTO).build();
         };
         return executeRequest(producer);
@@ -131,8 +130,8 @@ public class ResourceProvider {
         Producer<Response> producer = () -> {
             Response response;
             try {
-                Person personTO = PersonDAO.getPerson(personId);
-                PersonDAO.deletePerson(personTO);
+                Person personTO = EntityDAO.getPerson(personId);
+                EntityDAO.deletePerson(personTO);
                 response = Response.status(Response.Status.OK).build();
             } catch (NoResultException ex) {
                 response = Response.status(Response.Status.NOT_FOUND).build();
@@ -146,7 +145,7 @@ public class ResourceProvider {
         Producer<Response> producer = () -> {
             Response response;
             try {
-                Person personTO = PersonDAO.getPerson(personId);
+                Person personTO = EntityDAO.getPerson(personId);
                 List<MeasureType> measuresList = personTO.getMeasureHistory().getMeasureTypes().stream()
                         .filter(m -> m.getMeasure().equals(measureType)).collect(Collectors.toList());
                 Object returnValue = new GenericEntity<List<MeasureType>>(measuresList) {
@@ -178,7 +177,7 @@ public class ResourceProvider {
                     Date mDate = toDate(m.getCreated());
                     return m.getMeasure().equals(measureType) && mDate.before(beforeDate) && mDate.after(afterDate);
                 };
-                Person personTO = PersonDAO.getPerson(personId);
+                Person personTO = EntityDAO.getPerson(personId);
                 List<MeasureType> measuresList = personTO.getMeasureHistory().getMeasureTypes().stream()
                         .filter(filterRange).collect(Collectors.toList());
                 Object returnValue = new GenericEntity<List<MeasureType>>(measuresList) {
@@ -196,7 +195,7 @@ public class ResourceProvider {
         Producer<Response> producer = () -> {
             Response response;
             try {
-                Person personTO = PersonDAO.getPerson(personId);
+                Person personTO = EntityDAO.getPerson(personId);
                 List<MeasureType> measuresList = personTO.getHealthProfile().getMeasureTypes().stream()
                         .filter(m -> m.getMeasure().equals(measureType) && m.getMid().equals(measureId))
                         .collect(Collectors.toList());
@@ -221,7 +220,7 @@ public class ResourceProvider {
             try {
                 measure.setMid(null);
                 measure.setMeasure(measureType);
-                MeasureType newMeasure = PersonDAO.addMeasure(personId, measure);
+                MeasureType newMeasure = EntityDAO.addMeasure(personId, measure);
                 response = Response.status(Response.Status.OK).entity(newMeasure).build();
             } catch (NoResultException | NullPointerException ex) {
                 response = Response.status(Response.Status.NOT_FOUND).build();
@@ -235,7 +234,7 @@ public class ResourceProvider {
         Producer<Response> producer = () -> {
             Response response;
             try {
-                List<String> types = MeasureTypeDAO.listMeasure();
+                List<String> types = EntityDAO.listMeasure();
 
                 Object returnValue;
                 switch (mediaType) {
@@ -265,7 +264,7 @@ public class ResourceProvider {
             try {
                 measureTO.setMid(measureId);
                 measureTO.setMeasure(measureType);
-                PersonDAO.updateMeasureType(measureId, measureTO);
+                EntityDAO.updateMeasureType(measureId, measureTO);
                 return Response.status(Response.Status.OK).build();
             } catch (NoResultException | NullPointerException ex) {
                 response = Response.status(Response.Status.NOT_FOUND).build();
@@ -275,8 +274,11 @@ public class ResourceProvider {
         return executeRequest(producer);
     }
 
-    static Response resetTomcat() { //TODO DELETE
-        PersonDAO.resetDB();
-        return Response.status(Response.Status.OK).build();
+    static Response initDatabase() {
+        Producer<Response> producer = () -> {
+            EntityDAO.initDatabase();
+            return Response.status(Response.Status.OK).build();
+        };
+        return executeRequest(producer);
     }
 }

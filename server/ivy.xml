@@ -3,35 +3,10 @@
     <dependencies>
         <dependency org="org.glassfish.jersey.containers" name="jersey-container-servlet" rev="2.24"/>
         <dependency org="org.glassfish.jersey.core" name="jersey-server" rev="2.24"/>
-        <!--<dependency org="org.glassfish.jersey.containers" name="jersey-container-jdk-http" rev="2.24"/>-->
-
-        <!-- ?? -->
-        <!--<dependency org="org.glassfish.jersey.core" name="jersey-common" rev="2.24"/>-->
-        <!--<dependency org="com.sun.jersey" name="jersey-json" rev="1.19.3"/>-->
-
         <dependency org="org.eclipse.persistence" name="eclipselink" rev="2.6.4"/>
         <dependency org="org.eclipse.persistence" name="org.eclipse.persistence.jpa.modelgen.processor" rev="2.6.4"/>
         <dependency org="org.xerial" name="sqlite-jdbc" rev="3.15.1"/>
         <dependency org="org.projectlombok" name="lombok" rev="1.16.10"/>
-
-        <!-- TRY JUST JACKSON
-        <dependency org="com.fasterxml.jackson.module" name="jackson-module-jaxb-annotations" rev="2.4.2"/>
-        <dependency org="com.fasterxml.jackson.jaxrs" name="jackson-jaxrs-json-provider" rev="2.4.2"/>
-        -->
         <dependency org="org.glassfish.jersey.media" name="jersey-media-json-jackson" rev="2.24"/>
-
-        <!-- MY OLD DEPENDENCIES // TODO REMOVE
-        <dependency org="org.glassfish.jersey.containers" name="jersey-container-servlet-core" rev="2.24"/>
-        <dependency org="org.glassfish.jersey.bundles" name="jaxrs-ri" rev="2.24"/>
-        <dependency org="org.glassfish.jersey.core" name="jersey-server" rev="2.24"/>
-
-        <dependency org="org.eclipse.persistence" name="eclipselink" rev="2.6.4"/>
-        <dependency org="org.eclipse.persistence" name="org.eclipse.persistence.jpa.modelgen.processor" rev="2.6.4"/>
-        <dependency org="org.xerial" name="sqlite-jdbc" rev="3.15.1"/>
-        <dependency org="org.projectlombok" name="lombok" rev="1.16.10"/>
-
-        <dependency org="com.fasterxml.jackson.jaxrs" name="jackson-jaxrs-xml-provider" rev="2.8.4"/>
-        <dependency org="com.fasterxml.jackson.jaxrs" name="jackson-jaxrs-json-provider" rev="2.8.4"/>
-        -->
     </dependencies>
 </ivy-module>

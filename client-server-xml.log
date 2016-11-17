@@ -3,117 +3,117 @@ Request #1: GET person Accept: application/xml Content-type: application/xml
 => HTTP STATUS: 200
 <people>
     <person>
-        <id>75.0</id>
+        <id>1.0</id>
         <firstname>Alan</firstname>
         <lastname>Turing</lastname>
         <birthdate>1912-06-23</birthdate>
         <healthProfile>
             <measureTypes>
-                <mid>316.0</mid>
+                <mid>5.0</mid>
                 <measure>weight</measure>
                 <value>90.0</value>
-                <created>2016-11-15</created>
+                <created>2016-11-16</created>
             </measureTypes>
             <measureTypes>
-                <mid>317.0</mid>
+                <mid>6.0</mid>
                 <measure>height</measure>
                 <value>2.2</value>
-                <created>2016-11-16</created>
+                <created>2016-11-17</created>
             </measureTypes>
         </healthProfile>
     </person>
     <person>
-        <id>76.0</id>
+        <id>2.0</id>
         <firstname>Christopher</firstname>
         <lastname>McCandless</lastname>
         <birthdate>1968-02-12</birthdate>
         <healthProfile>
             <measureTypes>
-                <mid>322.0</mid>
+                <mid>11.0</mid>
                 <measure>weight</measure>
                 <value>90.0</value>
-                <created>2016-11-15</created>
+                <created>2016-11-16</created>
             </measureTypes>
             <measureTypes>
-                <mid>323.0</mid>
+                <mid>12.0</mid>
                 <measure>height</measure>
                 <value>2.2</value>
-                <created>2016-11-16</created>
+                <created>2016-11-17</created>
             </measureTypes>
         </healthProfile>
     </person>
 </people>
 
-Request #2: GET person/75.0 Accept: application/xml Content-type: application/xml
+Request #2: GET person/1.0 Accept: application/xml Content-type: application/xml
 => Result: OK
 => HTTP STATUS: 200
 <person>
-    <id>75.0</id>
+    <id>1.0</id>
     <firstname>Alan</firstname>
     <lastname>Turing</lastname>
     <birthdate>1912-06-23</birthdate>
     <healthProfile>
         <measureTypes>
-            <mid>316.0</mid>
+            <mid>5.0</mid>
             <measure>weight</measure>
             <value>90.0</value>
-            <created>2016-11-15</created>
+            <created>2016-11-16</created>
         </measureTypes>
         <measureTypes>
-            <mid>317.0</mid>
+            <mid>6.0</mid>
             <measure>height</measure>
             <value>2.2</value>
-            <created>2016-11-16</created>
+            <created>2016-11-17</created>
         </measureTypes>
     </healthProfile>
 </person>
 
-Request #3: PUT person/75.0 Accept: application/xml Content-type: application/xml
+Request #3: PUT person/1.0 Accept: application/xml Content-type: application/xml
 => Result: OK
 => HTTP STATUS: 200
 <person>
-    <id>75.0</id>
+    <id>1.0</id>
     <firstname>NewPersonName</firstname>
     <lastname>Turing</lastname>
     <birthdate>1912-06-23</birthdate>
     <healthProfile>
         <measureTypes>
-            <mid>316.0</mid>
+            <mid>5.0</mid>
             <measure>weight</measure>
             <value>90.0</value>
-            <created>2016-11-15</created>
+            <created>2016-11-16</created>
         </measureTypes>
         <measureTypes>
-            <mid>317.0</mid>
+            <mid>6.0</mid>
             <measure>height</measure>
             <value>2.2</value>
-            <created>2016-11-16</created>
+            <created>2016-11-17</created>
         </measureTypes>
     </healthProfile>
     <measureHistory>
         <measureTypes>
-            <mid>312.0</mid>
+            <mid>1.0</mid>
             <measure>weight</measure>
             <value>88.0</value>
-            <created>2016-11-15</created>
+            <created>2016-11-16</created>
         </measureTypes>
         <measureTypes>
-            <mid>313.0</mid>
+            <mid>2.0</mid>
             <measure>height</measure>
             <value>1.8</value>
-            <created>2016-11-16</created>
+            <created>2016-11-17</created>
         </measureTypes>
         <measureTypes>
-            <mid>314.0</mid>
+            <mid>3.0</mid>
             <measure>weight</measure>
             <value>89.0</value>
-            <created>2016-11-15</created>
+            <created>2016-11-16</created>
         </measureTypes>
         <measureTypes>
-            <mid>315.0</mid>
+            <mid>4.0</mid>
             <measure>height</measure>
             <value>2.0</value>
-            <created>2016-11-16</created>
+            <created>2016-11-17</created>
         </measureTypes>
     </measureHistory>
 </person>
@@ -122,18 +122,18 @@ Request #4: POST person Accept: application/xml Content-type: application/xml
 => Result: OK
 => HTTP STATUS: 201
 <person>
-    <id>77.0</id>
+    <id>3.0</id>
     <firstname>Chuck</firstname>
     <lastname>Norris</lastname>
     <birthdate>1945-01-01</birthdate>
     <healthProfile>
         <measureTypes>
-            <mid>324.0</mid>
+            <mid>13.0</mid>
             <measure>weight</measure>
             <value>78.9</value>
         </measureTypes>
         <measureTypes>
-            <mid>325.0</mid>
+            <mid>14.0</mid>
             <measure>height</measure>
             <value>172.0</value>
         </measureTypes>
@@ -141,7 +141,7 @@ Request #4: POST person Accept: application/xml Content-type: application/xml
     <measureHistory/>
 </person>
 
-Request #5: DELETE person/77.0 Accept: application/xml Content-type: application/xml
+Request #5: DELETE person/3.0 Accept: application/xml Content-type: application/xml
 => Result: OK
 => HTTP STATUS: 404
 
@@ -153,51 +153,51 @@ Request #6: GET /measureTypes Accept: application/xml Content-type: application/
     <measureType>height</measureType>
 </measureTypes>
 
-Request #7: GET person/76.0/height Accept: application/xml Content-type: application/xml
+Request #7: GET person/2.0/height Accept: application/xml Content-type: application/xml
 => Result: OK
 => HTTP STATUS: 200
 <measureTypes>
     <measureType>
-        <mid>319.0</mid>
+        <mid>8.0</mid>
         <measure>height</measure>
         <value>1.8</value>
-        <created>2016-11-16</created>
+        <created>2016-11-17</created>
     </measureType>
     <measureType>
-        <mid>321.0</mid>
+        <mid>10.0</mid>
         <measure>height</measure>
         <value>2.0</value>
-        <created>2016-11-16</created>
+        <created>2016-11-17</created>
     </measureType>
 </measureTypes>
 
-Request #8: GET person/76.0/height/319.0 Accept: application/xml Content-type: application/xml
+Request #8: GET person/2.0/height/8.0 Accept: application/xml Content-type: application/xml
 => Result: ERROR
 => HTTP STATUS: 404
 
-Request #9: POST person/75.0/weight Accept: application/xml Content-type: application/xml
+Request #9: POST person/1.0/weight Accept: application/xml Content-type: application/xml
 => Result: OK
 => HTTP STATUS: 200
 <measureType>
-    <mid>328.0</mid>
+    <mid>17.0</mid>
     <measure>weight</measure>
     <value>72.0</value>
     <created>2011-12-09</created>
 </measureType>
 
-Request #10: PUT person/75.0/weight/328.0 Accept: application/xml Content-type: application/xml
+Request #10: PUT person/1.0/weight/17.0 Accept: application/xml Content-type: application/xml
 => Result: OK
 => HTTP STATUS: 200
 
-Request #11: GET person/75.0/weight?before=2016-11-17&after=2016-11-15 Accept: application/xml Content-type: application/xml
+Request #11: GET person/1.0/weight?before=2016-11-18&after=2016-11-16 Accept: application/xml Content-type: application/xml
 => Result: OK
 => HTTP STATUS: 200
 <measureTypes>
     <measureType>
-        <mid>328.0</mid>
+        <mid>17.0</mid>
         <measure>weight</measure>
         <value>42.0</value>
-        <created>2016-11-16</created>
+        <created>2016-11-17</created>
     </measureType>
 </measureTypes>
 
@@ -206,22 +206,22 @@ Request #12: GET person?measureType=weight&max=89 Accept: application/xml Conten
 => HTTP STATUS: 200
 <people>
     <person>
-        <id>75.0</id>
+        <id>1.0</id>
         <firstname>NewPersonName</firstname>
         <lastname>Turing</lastname>
         <birthdate>1912-06-23</birthdate>
         <healthProfile>
             <measureTypes>
-                <mid>317.0</mid>
-                <measure>height</measure>
-                <value>2.2</value>
-                <created>2016-11-16</created>
-            </measureTypes>
-            <measureTypes>
-                <mid>329.0</mid>
+                <mid>18.0</mid>
                 <measure>weight</measure>
                 <value>72.0</value>
                 <created>2011-12-09</created>
+            </measureTypes>
+            <measureTypes>
+                <mid>6.0</mid>
+                <measure>height</measure>
+                <value>2.2</value>
+                <created>2016-11-17</created>
             </measureTypes>
         </healthProfile>
     </person>
