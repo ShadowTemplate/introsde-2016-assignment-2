@@ -22,7 +22,6 @@ import javax.xml.bind.JAXBException;
 
 public class Main {
 
-    //private static final String ENDPOINT = "http://localhost:8080/"; // TODO
     private static final String ENDPOINT = "https://introsde-a2-server.herokuapp.com/";
 
     private static final URI SERVER_URI = UriBuilder.fromUri(ENDPOINT).build();

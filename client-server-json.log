@@ -3,36 +3,36 @@ Request #1: GET person Accept: application/json Content-type: application/json
 => HTTP STATUS: 200
 {
   "people" : [ {
-    "id" : 1.0,
+    "id" : 65.0,
     "firstname" : "Alan",
     "lastname" : "Turing",
     "birthdate" : "1912-06-23",
     "healthProfile" : {
       "measureTypes" : [ {
-        "mid" : 5.0,
+        "mid" : 341.0,
         "measure" : "weight",
         "value" : 90.0,
         "created" : "2016-11-16"
       }, {
-        "mid" : 6.0,
+        "mid" : 342.0,
         "measure" : "height",
         "value" : 2.2,
         "created" : "2016-11-17"
       } ]
     }
   }, {
-    "id" : 2.0,
+    "id" : 66.0,
     "firstname" : "Christopher",
     "lastname" : "McCandless",
     "birthdate" : "1968-02-12",
     "healthProfile" : {
       "measureTypes" : [ {
-        "mid" : 11.0,
+        "mid" : 347.0,
         "measure" : "weight",
         "value" : 90.0,
         "created" : "2016-11-16"
       }, {
-        "mid" : 12.0,
+        "mid" : 348.0,
         "measure" : "height",
         "value" : 2.2,
         "created" : "2016-11-17"
@@ -41,22 +41,22 @@ Request #1: GET person Accept: application/json Content-type: application/json
   } ]
 }
 
-Request #2: GET person/1.0 Accept: application/json Content-type: application/json
+Request #2: GET person/65.0 Accept: application/json Content-type: application/json
 => Result: OK
 => HTTP STATUS: 200
 {
-  "id" : 1.0,
+  "id" : 65.0,
   "firstname" : "Alan",
   "lastname" : "Turing",
   "birthdate" : "1912-06-23",
   "healthProfile" : {
     "measureTypes" : [ {
-      "mid" : 5.0,
+      "mid" : 341.0,
       "measure" : "weight",
       "value" : 90.0,
       "created" : "2016-11-16"
     }, {
-      "mid" : 6.0,
+      "mid" : 342.0,
       "measure" : "height",
       "value" : 2.2,
       "created" : "2016-11-17"
@@ -64,22 +64,22 @@ Request #2: GET person/1.0 Accept: application/json Content-type: application/js
   }
 }
 
-Request #3: PUT person/1.0 Accept: application/json Content-type: application/json
+Request #3: PUT person/65.0 Accept: application/json Content-type: application/json
 => Result: OK
 => HTTP STATUS: 200
 {
-  "id" : 1.0,
+  "id" : 65.0,
   "firstname" : "NewPersonName",
   "lastname" : "Turing",
   "birthdate" : "1912-06-23",
   "healthProfile" : {
     "measureTypes" : [ {
-      "mid" : 5.0,
+      "mid" : 341.0,
       "measure" : "weight",
       "value" : 90.0,
       "created" : "2016-11-16"
     }, {
-      "mid" : 6.0,
+      "mid" : 342.0,
       "measure" : "height",
       "value" : 2.2,
       "created" : "2016-11-17"
@@ -87,22 +87,22 @@ Request #3: PUT person/1.0 Accept: application/json Content-type: application/js
   },
   "measureHistory" : {
     "measureTypes" : [ {
-      "mid" : 1.0,
+      "mid" : 337.0,
       "measure" : "weight",
       "value" : 88.0,
       "created" : "2016-11-16"
     }, {
-      "mid" : 2.0,
+      "mid" : 338.0,
       "measure" : "height",
       "value" : 1.8,
       "created" : "2016-11-17"
     }, {
-      "mid" : 3.0,
+      "mid" : 339.0,
       "measure" : "weight",
       "value" : 89.0,
       "created" : "2016-11-16"
     }, {
-      "mid" : 4.0,
+      "mid" : 340.0,
       "measure" : "height",
       "value" : 2.0,
       "created" : "2016-11-17"
@@ -114,19 +114,19 @@ Request #4: POST person Accept: application/json Content-type: application/json
 => Result: OK
 => HTTP STATUS: 201
 {
-  "id" : 4.0,
+  "id" : 68.0,
   "firstname" : "Chuck",
   "lastname" : "Norris",
   "birthdate" : "1945-01-01",
   "healthProfile" : {
     "measureTypes" : [ {
-      "mid" : 16.0,
-      "measure" : "height",
-      "value" : 172.0
-    }, {
-      "mid" : 15.0,
+      "mid" : 351.0,
       "measure" : "weight",
       "value" : 78.9
+    }, {
+      "mid" : 352.0,
+      "measure" : "height",
+      "value" : 172.0
     } ]
   },
   "measureHistory" : {
@@ -134,7 +134,7 @@ Request #4: POST person Accept: application/json Content-type: application/json
   }
 }
 
-Request #5: DELETE person/4.0 Accept: application/json Content-type: application/json
+Request #5: DELETE person/68.0 Accept: application/json Content-type: application/json
 => Result: OK
 => HTTP STATUS: 404
 
@@ -145,44 +145,44 @@ Request #6: GET /measureTypes Accept: application/json Content-type: application
   "measureType" : [ "weight", "height" ]
 }
 
-Request #7: GET person/2.0/height Accept: application/json Content-type: application/json
+Request #7: GET person/66.0/height Accept: application/json Content-type: application/json
 => Result: OK
 => HTTP STATUS: 200
 [ {
-  "mid" : 8.0,
+  "mid" : 344.0,
   "measure" : "height",
   "value" : 1.8,
   "created" : "2016-11-17"
 }, {
-  "mid" : 10.0,
+  "mid" : 346.0,
   "measure" : "height",
   "value" : 2.0,
   "created" : "2016-11-17"
 } ]
 
-Request #8: GET person/2.0/height/8.0 Accept: application/json Content-type: application/json
+Request #8: GET person/66.0/height/344.0 Accept: application/json Content-type: application/json
 => Result: ERROR
 => HTTP STATUS: 404
 
-Request #9: POST person/1.0/weight Accept: application/json Content-type: application/json
+Request #9: POST person/65.0/weight Accept: application/json Content-type: application/json
 => Result: OK
 => HTTP STATUS: 200
 {
-  "mid" : 18.0,
+  "mid" : 354.0,
   "measure" : "weight",
   "value" : 72.0,
   "created" : "2011-12-09"
 }
 
-Request #10: PUT person/1.0/weight/17.0 Accept: application/json Content-type: application/json
+Request #10: PUT person/65.0/weight/353.0 Accept: application/json Content-type: application/json
 => Result: OK
 => HTTP STATUS: 200
 
-Request #11: GET person/1.0/weight?before=2016-11-18&after=2016-11-16 Accept: application/json Content-type: application/json
+Request #11: GET person/65.0/weight?before=2016-11-18&after=2016-11-16 Accept: application/json Content-type: application/json
 => Result: OK
 => HTTP STATUS: 200
 [ {
-  "mid" : 17.0,
+  "mid" : 353.0,
   "measure" : "weight",
   "value" : 42.0,
   "created" : "2016-11-17"
@@ -193,21 +193,21 @@ Request #12: GET person?measureType=weight&max=89 Accept: application/json Conte
 => HTTP STATUS: 200
 {
   "people" : [ {
-    "id" : 1.0,
+    "id" : 65.0,
     "firstname" : "NewPersonName",
     "lastname" : "Turing",
     "birthdate" : "1912-06-23",
     "healthProfile" : {
       "measureTypes" : [ {
-        "mid" : 18.0,
-        "measure" : "weight",
-        "value" : 72.0,
-        "created" : "2011-12-09"
-      }, {
-        "mid" : 6.0,
+        "mid" : 342.0,
         "measure" : "height",
         "value" : 2.2,
         "created" : "2016-11-17"
+      }, {
+        "mid" : 354.0,
+        "measure" : "weight",
+        "value" : 72.0,
+        "created" : "2011-12-09"
       } ]
     }
   } ]
