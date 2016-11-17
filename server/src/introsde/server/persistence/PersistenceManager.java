@@ -1,4 +1,4 @@
-package introsde.server.util;
+package introsde.server.persistence;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,10 +20,14 @@ public enum PersistenceManager {
         entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
     }
 
+    <T> void persist(EntityManager entityManager, T object) {
+        System.out.println("\nGoing to persist: " + object + "\n");
+        entityManager.persist(object);
+    }
+
     public <T> void persist(T object) {
         runInTransaction(entityManager -> {
-            System.out.println("\nGoing to persist: " + object + "\n");
-            entityManager.persist(object);
+            persist(entityManager, object);
         });
     }
 
@@ -64,10 +68,14 @@ public enum PersistenceManager {
         });
     }
 
+    Object singleResultQuery(EntityManager entityManager, String query, Map<String, Object> parameters) {
+        System.out.println("\nGoing to run query: " + query + "\n params: " + parameters + "\n");
+        return buildQuery(entityManager, query, parameters).getSingleResult();
+    }
+
     public Object singleResultQuery(String query, Map<String, Object> parameters) {
         return runInTransaction(entityManager -> {
-            System.out.println("\nGoing to run query: " + query + "\n params: " + parameters + "\n");
-            return buildQuery(entityManager, query, parameters).getSingleResult();
+            return singleResultQuery(entityManager, query, parameters);
         });
     }
 
@@ -85,7 +93,14 @@ public enum PersistenceManager {
         });
     }
 
-    public void runInTransaction(Consumer<EntityManager> function) {
+    public <T> T runViaProxy(Function<EntityManagerProxy, T> function) {
+        return runInTransaction(entityManager -> {
+            System.out.println("\nRunning function\n");
+            return function.apply(new EntityManagerProxy(entityManager));
+        });
+    }
+
+    private void runInTransaction(Consumer<EntityManager> function) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -93,7 +108,7 @@ public enum PersistenceManager {
         transaction.commit();
     }
 
-    public <T> T runInTransaction(Function<EntityManager, T> function) {
+    private <T> T runInTransaction(Function<EntityManager, T> function) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();

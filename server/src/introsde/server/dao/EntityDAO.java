@@ -2,9 +2,8 @@ package introsde.server.dao;
 
 import introsde.common.to.MeasureType;
 import introsde.common.to.Person;
-import introsde.server.util.PersistenceManager;
+import introsde.server.persistence.PersistenceManager;
 
-import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,10 +48,11 @@ public class EntityDAO {
     }
 
     public static MeasureType addMeasure(Double personId, MeasureType measureType) {
-        return PersistenceManager.instance.runInTransaction(entityManager -> {
-            Query query = entityManager.createQuery("SELECT p FROM Person p WHERE p.id=:arg1");
-            query.setParameter("arg1", personId);
-            introsde.server.model.Person person = (introsde.server.model.Person) query.getSingleResult();
+        return PersistenceManager.instance.runViaProxy(entityManagerProxy -> {
+            String query = "SELECT p FROM Person p WHERE p.id=:arg1";
+            Map<String, Object> params = new HashMap<>();
+            params.put("arg1", personId);
+            introsde.server.model.Person person = (introsde.server.model.Person) entityManagerProxy.singleResultQuery(query, params);
 
             Predicate<? super introsde.server.model.MeasureType> sameMeasure =
                     (Predicate<introsde.server.model.MeasureType>) measure ->
@@ -67,7 +67,7 @@ public class EntityDAO {
             }
 
             currentMeasures.add(new introsde.server.model.MeasureType(measureType));
-            entityManager.persist(person);
+            entityManagerProxy.persist(person);
             return person.getHealthProfile().getMeasureTypes().stream().filter(sameMeasure).findFirst().get().buildTO();
         });
     }
