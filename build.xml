@@ -86,7 +86,7 @@
         </copy>
     </target>
 
-    <target name="build-war.server" depends="compile.server" description="Build server project war">
+    <target name="build.server" depends="compile.server" description="Build server project war">
         <war destfile="${server.war.file}" webxml="${server.basedir}/web/WEB-INF/web.xml">
             <classes dir="${server.basedir}/${build.dir}"/>
             <lib dir="${server.basedir}/${lib.dir}"/>
@@ -96,7 +96,7 @@
         </war>
     </target>
 
-    <target name="deploy.server" depends="build-war.server" description="Deploy server project war on Heroku">
+    <target name="deploy.server" depends="build.server" description="Deploy server project war on Heroku">
         <exec executable="heroku">
             <arg value="war:deploy"/>
             <arg value="${server.war.file}"/>
@@ -125,26 +125,20 @@
         </javac>
     </target>
 
-
-    <target name="build-jar.client" depends="compile.client">
+    <target name="build.client" depends="compile.client" description="Build client project jar">
         <delete file="${jar.file}" />
         <delete file="${manifest.file}" />
-
         <manifest file="${manifest.file}" >
-            <attribute name="built-by" value="${user.name}" />
             <attribute name="Main-Class" value="introsde.client.Main" />
         </manifest>
-
-        <jar destfile="${jar.file}"
-             basedir="${client.basedir}/${build.dir}"
-             manifest="${manifest.file}">
+        <jar destfile="${jar.file}" basedir="${client.basedir}/${build.dir}" manifest="${manifest.file}">
             <fileset dir="${client.basedir}/${build.dir}" includes="**/*.class" />
             <zipgroupfileset dir="${common.basedir}/${lib.dir}" includes="**/*.jar" />
             <zipgroupfileset dir="${client.basedir}/${lib.dir}" includes="**/*.jar" />
         </jar>
     </target>
 
-    <target name="execute-client" depends="build-jar.client" description="Run client evaluation">
+    <target name="execute.client" depends="build.client" description="Run client evaluation">
         <java jar="${jar.file}" fork="true"/>
     </target>
 
