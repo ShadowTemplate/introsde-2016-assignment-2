@@ -22,7 +22,7 @@ The project repository is made up of the following *files* and **folders**:
         * *RequestLog.java*: utility class to log requests results
     * *ivy.xml*: Ivy configuration file containing client dependencies  
 * **common**: common module
-    * **src/introsde/common/to**: Java source code shared between client and server
+    * **src/introsde/common/to**: Java source code shared between client and server (Transfer Objects)
         * *HealthProfile.java*, *MeasureHistory.java*, *MeasureType.java*, *MeasureTypes.java*, *Person.java*: annotated TOs
     * *ivy.xml*: Ivy configuration file containing TOs dependencies
 * **server**: server module
@@ -82,20 +82,34 @@ According to the request, the *main* method in the *Evaluator* class completes t
 Some Ant tasks are defined inside *build.xml*. An overview of what each task does follows. Tasks' dependencies are in brackets:
 * *download-ivy*: downloads Ivy jar from the Maven repository
 * *install-ivy* (*download-ivy*): adds Ivy jar to the working directory
-* *resolve* (*install-ivy*): downloads all the dependencies specified in the *ivy.xml* configuration file into the working directory
-* *clean*: deletes the compilation folder from the workspace
-* *init* (*resolve*, *clean*): initializes the workspace 
-* *compile* (*init*): compiles the code 
-* *execute.evaluation* (*compile*): runs the *main* method contained into the *Evaluator* class and described above
+* *retrieve.common* (*install-ivy*): downloads ivy dependencies for common module
+* *init.common* (*retrieve.common*): initializes common workspace
+* *retrieve.server* (*install-ivy*): downloads ivy dependencies for server module
+* *init.server* (*retrieve.server*): initializes server workspace
+* *compile.server* (*init.server, retrieve.common*): compiles server code 
+* *build.server* (*compile.server*): packages server application into a war
+* *deploy.server* (*build.server*): deploys application war to Heroku
+* *retrieve.client* (*install-ivy*): downloads ivy dependencies for client module
+* *init.client* (*retrieve.client*): initializes client workspace
+* *compile.client* (*init.client, retrieve.common*): compiles client code 
+* *build.client* (*compile.client*): packages client application into a jar
+* *execute.client* (*build.client*): executes client requests to server
 
 
 ## How to run
 
-DEPENDENCY DEPLOY HEROKU
-
-To run the code simply clone this project into your computer and run the *execute.evaluation* Ant task:
+To run the code simply clone this project into your computer with:
 ```
-$ git clone https://github.com/ShadowTemplate/introsde-2016-assignment-1.git
-$ cd introsde-2016-assignment-1
-$ ant execute.evaluation
+$ git clone https://github.com/ShadowTemplate/introsde-2016-assignment-2.git
+$ cd introsde-2016-assignment-2
+```
+
+To deploy the server on Heroku run the *deploy.server* Ant task (make sure [heroku-cli](https://devcenter.heroku.com/articles/heroku-command-line) in installed and set up on your pc):
+```
+$ ant deploy.server
+```
+
+To execute client requests run the *execute.client* Ant task:
+```
+$ ant execute.client
 ```
