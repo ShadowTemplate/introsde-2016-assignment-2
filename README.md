@@ -11,7 +11,7 @@ Server URL: [https://introsde-a2-server.herokuapp.com/](https://introsde-a2-serv
 
 Additional notes:
 * *HealthProfile* is dynamic;
-* Extra requests (*R#10*, *R#11*, *R#12*) and responses (*3.10*, *3.11*, *3.12*) implemented.
+* Extra requests (*R#10*, *R#11*, *R#12*) and responses (*3.10*, *3.11*, *3.12*) are implemented.
 
 ## Project structure
 
@@ -56,15 +56,15 @@ The project repository is made up of the following *files* and **folders**:
 
 
 The project is composed of three modules: client, common, server. 
-Both the client and the server depends on the common module that only contains some Transfer Objects.
-They are POJOs representing the common interface the two side of the application share.
+Both the client and the server modules depends on the common one, that only contains some Transfer Objects.
+These are POJOs representing the common interface the two side of the application share.
 
 The client application executes requests to the server and logs the result of these operations into two files.
 Before the requests get executed, the database is initialized in such a way that extra requests will obtain meaningful results.
 
-The server contains different packages. Each of them contains Java classes related to a specific layer of the architecture.
-Each layer is strongly decoupled from the other non-relevant ones: the resource layer only depends on the DAO, 
-the DAO layer only depends on the persistence one. By doing so, objects model classes are not handled by the resource layer
+The server is made up of different packages. Each of them contains Java classes related to a specific layer of the architecture.
+Each layer is strongly decoupled from the other non-relevant ones: the resource layer only depends on the DAO one, 
+the DAO layer only depends on the persistence one. By doing so, object model classes are not handled by the resource layer
 that only uses TOs.
 
 
