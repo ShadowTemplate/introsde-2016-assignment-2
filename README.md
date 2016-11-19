@@ -55,26 +55,17 @@ The project repository is made up of the following *files* and **folders**:
 * *README.md*: this file
 
 
-According to the request, the *main* method in the *Evaluator* class completes the tasks by using the following methods:
+The project is composed of three modules: client, common, server. 
+Both the client and the server depends on the common module that only contains some Transfer Objects.
+They are POJOs representing the common interface the two side of the application share.
 
-1. *printPeople*: prints all the people in *people.xml* by evaluating the XPath expression
+The client application executes requests to the server and logs the result of these operations into two files.
+Before the requests get executed, the database is initialized in such a way that extra requests will obtain meaningful results.
 
-    ```
-    //person
-    ```
-2. *printHealthProfile*: prints the health profile information for the person with a specific id in *people.xml* by evaluating the XPath expression
-
-    ```
-    /people/person[@id=input_id]/healthprofile
-    ```
-3. *searchByWeight*: finds people in *people.xml* satisfying a user-defined boolean condition on their weight by evaluating the XPath expression   
-
-    ```
-    //healthprofile[weight input_operator input_value]/parent::person
-    ```
-4. *runXMLMarshalling*: generates random people and performs marshalling via JAXB storing data in a new XML file
-5. *runXMLUnmarshalling*: performs unmarshalling via JAXB of the file created during the previous step
-6. *runJSONMarshalling*: generates random people and performs marshalling via Jackson storing data in a new JSON file
+The server contains different packages. Each of them contains Java classes related to a specific layer of the architecture.
+Each layer is strongly decoupled from the other non-relevant ones: the resource layer only depends on the DAO, 
+the DAO layer only depends on the persistence one. By doing so, objects model classes are not handled by the resource layer
+that only uses TOs.
 
 
 ## Project tasks
@@ -104,7 +95,7 @@ $ git clone https://github.com/ShadowTemplate/introsde-2016-assignment-2.git
 $ cd introsde-2016-assignment-2
 ```
 
-To deploy the server on Heroku run the *deploy.server* Ant task (make sure [heroku-cli](https://devcenter.heroku.com/articles/heroku-command-line) in installed and set up on your pc):
+To deploy the server on Heroku run the *deploy.server* Ant task (make sure [heroku-cli](https://devcenter.heroku.com/articles/heroku-command-line) is installed and set up on your pc):
 ```
 $ ant deploy.server
 ```
