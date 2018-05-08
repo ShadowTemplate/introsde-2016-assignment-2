@@ -3,7 +3,7 @@
 **Introduction to Service Design and Engineering | University of Trento**
 
 This file aims to provide a short documentation for the second course assignment.  
-The original instructions can be found [here](https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/assignments/assignment-2).
+The original instructions can be found [here](https://rawgit.com/ShadowTemplate/introsde-2016-assignment-2/master/instructions/Assignment%2002:%20RESTful%20Services%20-%20introSDE_2016_17.htm).
 
 The project was developed individually.
 
