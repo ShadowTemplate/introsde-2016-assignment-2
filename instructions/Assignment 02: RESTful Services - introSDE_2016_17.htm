@@ -1,0 +1,326 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" itemscope="" itemtype="http://schema.org/WebPage"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="chrome=1">
+<script async="" src="Assignment%2002:%20RESTful%20Services%20-%20introSDE_2016_17_files/analytics.js"></script><script type="text/javascript">/* Copyright 2008 Google. */ (function() { (function(){function e(a){this.t={};this.tick=function(a,c,b){this.t[a]=[void 0!=b?b:(new Date).getTime(),c];if(void 0==b)try{window.console.timeStamp("CSI/"+a)}catch(h){}};this.tick("start",null,a)}var a,d;window.performance&&(d=(a=window.performance.timing)&&a.responseStart);var f=0<d?new e(d):new e;window.jstiming={Timer:e,load:f};if(a){var c=a.navigationStart;0<c&&d>=c&&(window.jstiming.srt=d-c)}if(a){var b=window.jstiming.load;0<c&&d>=c&&(b.tick("_wtsrt",void 0,c),b.tick("wtsrt_","_wtsrt",d),
+b.tick("tbsd_","wtsrt_"))}try{a=null,window.chrome&&window.chrome.csi&&(a=Math.floor(window.chrome.csi().pageT),b&&0<c&&(b.tick("_tbnd",void 0,window.chrome.csi().startE),b.tick("tbnd_","_tbnd",c))),null==a&&window.gtbExternal&&(a=window.gtbExternal.pageT()),null==a&&window.external&&(a=window.external.pageT,b&&0<c&&(b.tick("_tbnd",void 0,window.external.startE),b.tick("tbnd_","_tbnd",c))),a&&(window.jstiming.pt=a)}catch(g){}})(); })()
+</script>
+<link rel="shortcut icon" type="image/x-icon" href="https://www.google.com/images/icons/product/sites-16.ico">
+<link rel="apple-touch-icon" href="https://ssl.gstatic.com/sites/p/fc5218/system/app/images/apple-touch-icon.png" type="image/png">
+<script type="text/javascript">/* Copyright 2008 Google. */ (function() { function d(a){return document.getElementById(a)}window.byId=d;function g(a){return a.replace(/^\s+|\s+$/g,"")}window.trim=g;var h=[],k=0;window.JOT_addListener=function(a,b,c){var f=new String(k++);a={eventName:a,handler:b,compId:c,key:f};h.push(a);return f};window.JOT_removeListenerByKey=function(a){for(var b=0;b<h.length;b++)if(h[b].key==a){h.splice(b,1);break}};window.JOT_removeAllListenersForName=function(a){for(var b=0;b<h.length;b++)h[b].eventName==a&&h.splice(b,1)};
+window.JOT_postEvent=function(a,b,c){var f={eventName:a,eventSrc:b||{},payload:c||{}};if(window.JOT_fullyLoaded)for(b=h.length,c=0;c<b&&c<h.length;c++){var e=h[c];e&&e.eventName==a&&(f.listenerCompId=e.compId||"",(e="function"==typeof e.handler?e.handler:window[e.handler])&&e(f))}else window.JOT_delayedEvents.push({eventName:a,eventSrc:b,payload:c})};window.JOT_delayedEvents=[];window.JOT_fullyLoaded=!1;
+window.JOT_formatRelativeToNow=function(a,b){a=((new Date).getTime()-a)/6E4;if(1440<=a||0>a)return null;var c=0;60<=a&&(a/=60,c=2);2<=a&&c++;return b?window.JOT_siteRelTimeStrs[c].replace("__duration__",Math.floor(a)):window.JOT_userRelTimeStrs[c].replace("__duration__",Math.floor(a))}; })()
+</script>
+<script>
+
+  
+
+  var breadcrumbs = [{"path":"/a/unitn.it/introsde_2016-17/lab-sessions","deleted":false,"title":"Lab Sessions","dir":"ltr"},{"path":"/a/unitn.it/introsde_2016-17/lab-sessions/assignments","deleted":false,"title":"Course Assignments","dir":"ltr"},{"path":"/a/unitn.it/introsde_2016-17/lab-sessions/assignments/assignment-2","deleted":false,"title":"Assignment 02: RESTful Services","dir":"ltr"}];
+  var JOT_clearDotPath = 'https://ssl.gstatic.com/sites/p/fc5218/system/app/images/cleardot.gif';
+
+  
+  var JOT_userRelTimeStrs = ["a minute ago","__duration__ minutes ago","an hour ago","__duration__ hours ago"];
+
+  
+  
+
+  
+
+  var webspace = {"enableAnalytics":false,"pageSharingId":"jotspot_page","enableUniversalAnalytics":false,"sharingPolicy":"OPENED","siteTitle":"introSDE_2016/17","adsensePublisherId":null,"features":{"validateClientGvizDataSourceUrls":true,"contactStoreMigrationPollForGapi":true,"gapiLoaderUtil":true,"moreMobileStyleImprovements":true,"accumulativeBubblePanelCreation":true,"oAuthForChartsApi":false,"batchFileCabinetOperations":true,"fileCabinetScreenReaderFix":true,"pageDrafts":false,"mobileOrientationFix":true,"plusBadge":false,"pdfEmbedSupport":false,"jsClickFix":true},"isPublic":true,"isConsumer":false,"serverFlags":{"cajaBaseUrl":"//www.gstatic.com/caja","cajaDebugMode":false},"onepickBaseUrl":"https://docs.google.com","domainAnalyticsAccountId":"","plusPageId":"","signInUrl":"https://accounts.google.com/AccountChooser?continue\u003dhttps://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/assignments/assignment-2\u0026service\u003djotspot","analyticsAccountId":"","scottyUrl":"/_/upload","homePath":"/","siteNoticeUrlEnabled":null,"plusPageUrl":"","adsensePromoClickedOrSiteIneligible":true,"csiReportUri":"https://gg.google.com/csi","sharingId":"jotspot","termsUrl":"//www.google.com/intl/en/policies/terms/","gvizVersion":1,"editorResources":{"sitelayout":["https://ssl.gstatic.com/sites/p/fc5218/system/app/css/sitelayouteditor.css"],"text":["https://ssl.gstatic.com/sites/p/fc5218/system/js/codemirror.js","https://ssl.gstatic.com/sites/p/fc5218/system/app/css/codemirror_css.css","https://ssl.gstatic.com/sites/p/fc5218/system/js/trog_edit__en.js","https://ssl.gstatic.com/sites/p/fc5218/system/app/css/trogedit.css","/a/unitn.it/introsde_2016-17/_/rsrc/1476943131000/system/app/css/editor.css","https://ssl.gstatic.com/sites/p/fc5218/system/app/css/codeeditor.css","/a/unitn.it/introsde_2016-17/_/rsrc/1476943131000/system/app/css/camelot/editor-jfk.css"]},"sharingUrlPrefix":"/_/sharing","isAdsenseEnabled":true,"domain":"unitn.it","baseUri":"/a/unitn.it/introsde_2016-17","name":"introsde_2016-17","siteTemplateId":false,"siteNoticeRevision":null,"siteNoticeUrlAddress":null,"siteNoticeMessage":null,"page":{"isRtlLocale":false,"canDeleteWebspace":null,"isPageDraft":null,"parentPath":"/lab-sessions/assignments","parentWuid":"wuid:gx:2711ff6db9ecedac","siteLocale":"en","timeZone":"Europe/Paris","type":"text","title":"Assignment 02: RESTful Services","locale":"en","wuid":"wuid:gx:551a5255108c3982","revision":2,"path":"/lab-sessions/assignments/assignment-2","isSiteRtlLocale":false,"pageInheritsPermissions":null,"name":"assignment-2","canChangePath":true,"state":"","properties":{},"bidiEnabled":false,"currentTemplate":{"path":"/system/app/pagetemplates/text","title":"Web Page"}},"canPublishScriptToAnyone":true,"user":{"keyboardShortcuts":true,"sessionIndex":"","guest_":true,"displayNameOrEmail":"guest","userName":"guest","uid":"","renderMobile":false,"domain":"","namespace":"","hasWriteAccess":false,"namespaceUser":false,"primaryEmail":"guest","hasAdminAccess":false},"gadgets":{"baseUri":"/a/unitn.it/introsde_2016-17/system/app/pages/gadgets"}};
+  webspace.page.breadcrumbs = breadcrumbs;
+
+  
+  var JOT_siteRelTimeStrs = ["a minute ago","__duration__ minutes ago","an hour ago","__duration__ hours ago"];
+
+</script>
+<script type="text/javascript">
+                window.jstiming.load.tick('scl');
+              </script>
+<meta name="title" content="Assignment 02: RESTful Services - introSDE_2016/17">
+<meta itemprop="name" content="Assignment 02: RESTful Services - introSDE_2016/17">
+<meta property="og:title" content="Assignment 02: RESTful Services - introSDE_2016/17">
+<style type="text/css">
+</style>
+<link rel="stylesheet" type="text/css" href="Assignment%2002:%20RESTful%20Services%20-%20introSDE_2016_17_files/standard-css-ski-ltr-ltr.css">
+<link rel="stylesheet" type="text/css" href="Assignment%2002:%20RESTful%20Services%20-%20introSDE_2016_17_files/overlay.css">
+<link rel="stylesheet" type="text/css" href="Assignment%2002:%20RESTful%20Services%20-%20introSDE_2016_17_files/allthemes-view.css">
+<!--[if IE]>
+          <link rel="stylesheet" type="text/css" href="/a/unitn.it/introsde_2016%2d17/system/app/css/camelot/allthemes%2die.css" />
+        <![endif]-->
+<title>Assignment 02: RESTful Services - introSDE_2016/17</title>
+<meta itemprop="image" content="https://www.google.com/a/cpanel/unitn.it/images/logo.gif?service=google_default">
+<meta property="og:image" content="https://www.google.com/a/cpanel/unitn.it/images/logo.gif?service=google_default">
+<script type="text/javascript">
+                window.jstiming.load.tick('cl');
+              </script>
+<script type="text/javascript" charset="UTF-8" src="Assignment%2002:%20RESTful%20Services%20-%20introSDE_2016_17_files/platform.js" gapi_processed="true"></script><script src="Assignment%2002:%20RESTful%20Services%20-%20introSDE_2016_17_files/ga.js"></script></head>
+<body xmlns="http://www.google.com/ns/jotspot" id="body" class=" en            ">
+<div id="sites-page-toolbar" class="sites-header-divider">
+<div xmlns="http://www.w3.org/1999/xhtml" id="sites-status" class="sites-status" style="display:none;"><div id="sites-notice" class="sites-notice" role="status" aria-live="assertive"> </div></div>
+</div>
+<div id="sites-chrome-everything-scrollbar">
+<div id="sites-chrome-everything" class="">
+<div id="sites-chrome-page-wrapper" style="direction: ltr">
+<div id="sites-chrome-page-wrapper-inside">
+<div xmlns="http://www.w3.org/1999/xhtml" id="sites-chrome-header-wrapper" style="">
+<table id="sites-chrome-header" class="sites-layout-hbox" style="" cellspacing="0">
+<tbody><tr class="sites-header-primary-row" id="sites-chrome-userheader">
+</tr>
+<tr class="sites-header-secondary-row" id="sites-chrome-horizontal-nav">
+<td colspan="2" id="sites-chrome-header-horizontal-nav-container" role="navigation">
+</td>
+</tr>
+</tbody></table>
+</div>
+<div id="sites-chrome-main-wrapper">
+<div id="sites-chrome-main-wrapper-inside">
+<table id="sites-chrome-main" class="sites-layout-hbox" cellspacing="0" cellpadding="{scmCellpadding}" border="0">
+<tbody><tr>
+<td id="sites-chrome-sidebar-left" class="sites-layout-sidebar-left" style="display: none; width: 150px">
+<div xmlns="http://www.w3.org/1999/xhtml" id="COMP_2bd" class="sites-embed" role="navigation"><div class="sites-embed-content sites-sidebar-nav"><ul role="navigation" jotid="navList" class="has-expander"><li class="topLevel nav-first parent " wuid="gx:4391f7da998432a8"><div dir="ltr" style="padding-left: 0px;"><div class="expander"></div><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home" jotid="wuid:gx:4391f7da998432a8" class="sites-navigation-link topLevel">Introduction to Service Design and Engineering Course</a></div><ul role="navigation" class="has-expander"><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/-big-web-services-soap" jotid="wuid:gx:6f6a340ee2206f9c" class="sites-navigation-link">"Big" Web Services: SOAP</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/introduction-to-the-course" jotid="wuid:gx:60a96b71ab447fe7" class="sites-navigation-link">Introduction to the Course</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/introduction-to-xml" jotid="wuid:gx:4a2aa17fbec78961" class="sites-navigation-link">Introduction to XML</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/lessons" jotid="wuid:gx:677c956683af9c4c" class="sites-navigation-link">Lessons</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/middleware-and-web-services" jotid="wuid:gx:d4f92480ef22590" class="sites-navigation-link">Middleware and Web Services</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/principles-of-service-oriented-architectures" jotid="wuid:gx:11fbc0a957548809" class="sites-navigation-link">Principles of Service-Oriented Architectures</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/rest-tutorial" jotid="wuid:gx:6b05cc78df757487" class="sites-navigation-link">REST Tutorial</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/restful-web-services" jotid="wuid:gx:f1d6ffe24d339b2" class="sites-navigation-link">RESTful Web Services</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/the-ws--web-service-extensions" jotid="wuid:gx:5da787236a9cc86f" class="sites-navigation-link">The WS-* Web Service Extensions</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/uddi-universal-description-discovery-and-integration" jotid="wuid:gx:50051631b06efd80" class="sites-navigation-link">UDDI: Universal Description, Discovery and Integration</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/service-composition" jotid="wuid:gx:79642db16d109d11" class="sites-navigation-link">Web service composition</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/home/wsdl-the-web-service-description-language" jotid="wuid:gx:3aa0b2c0a1e53d75" class="sites-navigation-link">WSDL: the Web Service Description Language</a></div></li></ul></li><li class="topLevel parent " wuid="gx:2b23a22887d18011"><div dir="ltr" style="padding-left: 0px;"><div class="expander"></div><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions" jotid="wuid:gx:2b23a22887d18011" class="sites-navigation-link topLevel">Lab Sessions</a></div><ul role="navigation" class="has-expander"><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/assignments" jotid="wuid:gx:2711ff6db9ecedac" class="sites-navigation-link">Course Assignments</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/lab-sessions-starting-up" jotid="wuid:gx:32853087cff69d5c" class="sites-navigation-link">Lab Sessions: starting up</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/lab-session-1" jotid="wuid:gx:75a00b2739c1eb83" class="sites-navigation-link">LAB01: Introduction to the Lab and brief Java review</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/lab-session-02" jotid="wuid:gx:cbfe17b06b550b1" class="sites-navigation-link">LAB02: More Java, Eclipse, ANT and First example of a service with Axis2</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/lab-session-3" jotid="wuid:gx:bc8074a644cb324" class="sites-navigation-link">LAB03: XML, XPATH &amp; XML Schemas</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/lab-session-4" jotid="wuid:gx:18bd353036b25a88" class="sites-navigation-link">LAB04: Mapping XML (and JSON) to (and from) Objects</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/lab-session-5" jotid="wuid:gx:4b67dbf6a1f70865" class="sites-navigation-link">LAB05: The REST architectural style &amp; RESTful web services (1)</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/lab-session-6" jotid="wuid:gx:2744b3c5cf20a302" class="sites-navigation-link">LAB06: CRUD RESTful Services (2)</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/lab-session-7" jotid="wuid:gx:2c91eca26203be46" class="sites-navigation-link">LAB07: Reading and writing from Databases &amp; JPA (Java Persistence API)</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/lab-session-8" jotid="wuid:gx:17bfa53b4c561559" class="sites-navigation-link">LAB08: SOAP Web Services (1)</a></div></li><li class=""><div dir="ltr" style="padding-left: 38px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/lab-session-9" jotid="wuid:gx:28b6875a4f4ffd67" class="sites-navigation-link">LAB09: SOAP Web Services (2)</a></div></li></ul></li><li class="topLevel "><div dir="ltr" style="padding-left: 19px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/quizzes-of-course" jotid="wuid:gx:187f478cd35c725e" class="sites-navigation-link topLevel">Quizzes of Course</a></div></li><li class="topLevel "><div dir="ltr" style="padding-left: 19px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/tests-results" jotid="wuid:gx:77ea839acc34c362" class="sites-navigation-link topLevel">Tests Results</a></div></li><li class="topLevel "><div dir="ltr" style="padding-left: 19px;"><a href="https://sites.google.com/a/unitn.it/introsde_2016-17/system/app/pages/sitemap/hierarchy" jotid="wuid:gx:4e518df99fdf323b" class="sites-navigation-link topLevel">Sitemap</a></div></li></ul></div></div>
+</td>
+<td id="sites-canvas-wrapper">
+<div id="sites-canvas" role="main">
+<div id="goog-ws-editor-toolbar-container"> </div>
+<div xmlns="http://www.w3.org/1999/xhtml" id="title-crumbs" style="">
+<a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions" dir="ltr">Lab Sessions</a>‎ &gt; ‎<a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/assignments" dir="ltr">Course Assignments</a>‎ &gt; ‎
+  </div>
+<h3 xmlns="http://www.w3.org/1999/xhtml" id="sites-page-title-header" style="" align="left">
+<span id="sites-page-title" dir="ltr" tabindex="-1" style="outline: none">Assignment 02: RESTful Services</span>
+</h3>
+<div id="sites-canvas-main" class="sites-canvas-main">
+<div id="sites-canvas-main-content">
+<table xmlns="http://www.w3.org/1999/xhtml" class="sites-layout-name-one-column sites-layout-hbox" cellspacing="0"><tbody><tr><td class="sites-layout-tile sites-tile-name-content-1"><div dir="ltr"><h1 style="font-size:2.25em;margin-right:0px;margin-bottom:16px;margin-left:0px;line-height:1.2;padding-bottom:0.3em;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(238,238,238);color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;margin-top:0px!important"><a name="TOC-Assignment-02:-RESTful-Services"></a>Assignment 02: RESTful Services</h1><p style="margin-top:0px;margin-bottom:16px;color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><strong>Introduction to Service Design and Engineering | University of Trento |&nbsp;<a href="https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/assignments/assignment-2" style="color:rgb(65,131,196);background:transparent" title="Permalink to Assignment 02: RESTful Services">Webpage</a></strong></p><h2 style="margin-top:1em;margin-bottom:16px;line-height:1.225;font-size:1.75em;padding-bottom:0.3em;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(238,238,238);color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif"><a href="https://github.com/cdparra/introsde/tree/master/assignments/assignment02#pre-requisites" name="user-content-pre-requisites" style="color:rgb(65,131,196);display:block;padding-right:6px;padding-left:30px;background:transparent" rel="nofollow"></a>Pre-Requisites</h2><p style="margin-top:0px;margin-bottom:16px;color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><strong>Lab Modules: 5, 6, 7</strong></p><h2 style="color:rgb(51,51,51);font-size:1.75em;line-height:1.225;font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;padding-bottom:0.3em;margin-top:1em;margin-bottom:16px;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(238,238,238)"><a name="TOC-General-concept"></a>General concept</h2><div>In
+ this assignment you need to implement a server and a client calling 
+this server. The server should be deployed on Heroku, so anybody can 
+call it. To make the assignment more interesting and engaging, we 
+encourage students to work in pairs: Student A implements her own server
+ and a client for the server of Student B. We can not force everybody to
+ work in pairs. If by some reason you cannot work in pair, then 
+implement a client for your own server.&nbsp;</div><h2 style="margin-top:1em;margin-bottom:16px;line-height:1.225;font-size:1.75em;padding-bottom:0.3em;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(238,238,238);color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif"><a name="TOC-Part-1---The-Model"></a><a href="https://github.com/cdparra/introsde/tree/master/assignments/assignment02#part-1---the-model" style="color:rgb(65,131,196);display:block;padding-right:6px;padding-left:30px;background:transparent" rel="nofollow"></a>Part 1 - The Model</h2><ul style="padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:16px;line-height:25.6px"><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px"><p style="margin-top:16px;margin-bottom:16px">Create a model that supports</p><ul style="padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:0px"><li><strong>People</strong>&nbsp;identified by an&nbsp;<strong>id</strong>&nbsp;and having at least&nbsp;<em>birthdate</em>,&nbsp;<em>first</em>&nbsp;and&nbsp;<em>lastname</em></li><li>A Health/Lifestyle profile for each person, with measures such as&nbsp;<strong>weight</strong>&nbsp;and&nbsp;<strong>height</strong>&nbsp;(and others if you like)</li><li>The history of these measures by date</li></ul></li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px"><p style="margin-top:16px;margin-bottom:16px">To clients, the model should look like as follows:</p></li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px"><p style="margin-top:16px;margin-bottom:16px"><strong>Person</strong></p><div style="margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-top-left-radius:3px;border-top-right-radius:3px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">{
+      <span style="color:rgb(223,80,0)"><span>"</span>firstname<span>"</span></span>     : <span style="color:rgb(223,80,0)"><span>"</span>Chuck<span>"</span></span>,
+      <span style="color:rgb(223,80,0)"><span>"</span>lastname<span>"</span></span>      : <span style="color:rgb(223,80,0)"><span>"</span>Norris<span>"</span></span>,
+      <span style="color:rgb(223,80,0)"><span>"</span>birthdate<span>"</span></span>     : <span style="color:rgb(223,80,0)"><span>"</span>1945-01-01<span>"</span></span>,
+      <span style="color:rgb(223,80,0)"><span>"</span>healthProfile<span>"</span></span> : {
+                <span style="color:rgb(223,80,0)"><span>"</span>weight<span>"</span></span>  : <span style="color:rgb(163,21,21)">78.9</span>,
+                <span style="color:rgb(223,80,0)"><span>"</span>height<span>"</span></span>  : <span style="color:rgb(163,21,21)">172</span>
+      }
+}</pre></div></li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px"><p style="margin-top:16px;margin-bottom:16px"><strong style="line-height:25.6000003814697px;background-color:transparent">History of one measure (e.g., weight)</strong></p></li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px"><div style="margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">[ 
+    { 
+        <span style="color:rgb(223,80,0)">"mid"</span> : <span style="color:rgb(148,82,119)">992</span>,
+        <span style="color:rgb(223,80,0)">"value"</span> : <span style="color:rgb(148,82,119)">78.9</span>,
+        <span style="color:rgb(223,80,0)">"created"</span> : <span style="color:rgb(223,80,0)">"2007-12-09"</span>
+    },
+    { 
+        <span style="color:rgb(223,80,0)">"mid"</span> : <span style="color:rgb(148,82,119)">999</span>,
+        <span style="color:rgb(223,80,0)">"value"</span> : <span style="color:rgb(148,82,119)">75</span>,
+        <span style="color:rgb(223,80,0)">"created"</span> : <span style="color:rgb(223,80,0)">"2009-12-09"</span>
+    },
+    { 
+        <span style="color:rgb(223,80,0)">"mid"</span> : <span style="color:rgb(148,82,119)">1002</span>,
+        <span style="color:rgb(223,80,0)">"value"</span> : <span style="color:rgb(148,82,119)">72</span>,
+        <span style="color:rgb(223,80,0)">"created"</span> : <span style="color:rgb(223,80,0)">"2012-12-09"</span>
+    }
+]</pre></div></li><li><p style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;margin-top:16px;margin-bottom:16px;line-height:25.6px"><strong>Person in XML</strong></p><div style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;margin-bottom:16px;line-height:25.6px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-top-left-radius:3px;border-top-right-radius:3px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">&lt;<span style="color:rgb(223,80,0)">person</span>&gt;
+    &lt;<span style="color:rgb(223,80,0)">firstname</span>&gt;Chuck&lt;/<span style="color:rgb(223,80,0)">firstname</span>&gt;
+        &lt;<span style="color:rgb(223,80,0)">lastname</span>&gt;Norris&lt;/<span style="color:rgb(223,80,0)">lastname</span>&gt;
+        &lt;<span style="color:rgb(223,80,0)">birthdate</span>&gt;1945-01-01&lt;/<span style="color:rgb(223,80,0)">birthdate</span>&gt;
+        &lt;<span style="color:rgb(223,80,0)">healthProfile</span>&gt;
+            &lt;<span style="color:rgb(223,80,0)">weight</span>&gt;78.9&lt;/<span style="color:rgb(223,80,0)">weight</span>&gt;
+            &lt;<span style="color:rgb(223,80,0)">height</span>&gt;172&lt;/<span style="color:rgb(223,80,0)">height</span>&gt;
+        &lt;/<span style="color:rgb(223,80,0)">healthProfile</span>&gt;
+&lt;/<span style="color:rgb(223,80,0)">person</span>&gt;</pre></div><p style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;margin-top:16px;margin-bottom:16px"><span style="line-height:25.6000003814697px;background-color:transparent">In case you keep healthProfile&nbsp;</span><em style="line-height:25.6000003814697px;background-color:transparent">static</em><span style="line-height:25.6000003814697px;background-color:transparent">&nbsp;(stays with weight and height only, even if other measures are available) the structure is:</span></p><div style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-top-left-radius:3px;border-top-right-radius:3px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">&lt;<span style="color:rgb(223,80,0)">healthProfile</span>&gt;
+        &lt;<span style="color:rgb(223,80,0)">weight</span>&gt;78.9&lt;/<span style="color:rgb(223,80,0)">weight</span>&gt;
+        &lt;<span style="color:rgb(223,80,0)">height</span>&gt;172&lt;/<span style="color:rgb(223,80,0)">height</span>&gt;
+&lt;/<span style="color:rgb(223,80,0)">healthProfile</span>&gt;</pre></div><p style="margin-top:16px;margin-bottom:16px"><font face="Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif" color="#333333"><span style="font-size:16px">In case you have healthProfile build <i>dynamically</i>&nbsp;(according to measureTypes - you get extra points for that), then the structure is approximately like this (</span></font><strong style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px">it can be different and it is fine</strong><font face="Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif" color="#333333"><span style="font-size:16px">, as this part is not checked by&nbsp;</span></font><strong style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px">Client</strong><font face="Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif" color="#333333"><span style="font-size:16px">):</span></font></p><div style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-top-left-radius:3px;border-top-right-radius:3px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">&lt;<span style="color:rgb(223,80,0)">healthProfile</span>&gt;
+    &lt;<span style="color:rgb(223,80,0)">measureType</span>&gt;
+        &lt;<span style="color:rgb(223,80,0)">measure</span>&gt;Height&lt;/<span style="color:rgb(223,80,0)">measure</span>&gt;
+        &lt;<span style="color:rgb(223,80,0)">value</span>&gt;172&lt;/<span style="color:rgb(223,80,0)">value</span>&gt;
+    &lt;/<span style="color:rgb(223,80,0)">measureType</span>&gt;
+    &lt;<span style="color:rgb(223,80,0)">measureType</span>&gt;
+        &lt;<span style="color:rgb(223,80,0)">measure</span>&gt;Weight&lt;/<span style="color:rgb(223,80,0)">measure</span>&gt;
+        &lt;<span style="color:rgb(223,80,0)">value</span>&gt;78.9&lt;/<span style="color:rgb(223,80,0)">value</span>&gt;
+    &lt;/<span style="color:rgb(223,80,0)">measureType</span>&gt;
+&lt;/<span style="color:rgb(223,80,0)">healthProfile</span>&gt;</pre></div></li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px"><p style="margin-top:16px;margin-bottom:16px"><strong style="line-height:25.6000003814697px;background-color:transparent">History of one measure in XML (e.g., weight)</strong></p></li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px"><div style="margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">&lt;<span style="color:rgb(0,0,128)">measureHistory</span>&gt; 
+    &lt;<span style="color:rgb(0,0,128)">measure</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">mid</span>&gt;992&lt;/<span style="color:rgb(0,0,128)">mid</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">value</span>&gt;78.9&lt;/<span style="color:rgb(0,0,128)">value</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">created</span>&gt;2007-12-09&lt;/<span style="color:rgb(0,0,128)">created</span>&gt;
+    &lt;/<span style="color:rgb(0,0,128)">measure</span>&gt;
+    &lt;<span style="color:rgb(0,0,128)">measure</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">mid</span>&gt;999&lt;/<span style="color:rgb(0,0,128)">mid</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">value</span>&gt;75&lt;/<span style="color:rgb(0,0,128)">value</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">created</span>&gt;2009-12-09&lt;/<span style="color:rgb(0,0,128)">created</span>&gt;
+    &lt;/<span style="color:rgb(0,0,128)">measure</span>&gt;
+    &lt;<span style="color:rgb(0,0,128)">measure</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">mid</span>&gt;1002&lt;/<span style="color:rgb(0,0,128)">mid</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">value</span>&gt;72&lt;/<span style="color:rgb(0,0,128)">value</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">created</span>&gt;2011-12-09&lt;/<span style="color:rgb(0,0,128)">created</span>&gt;
+    &lt;/<span style="color:rgb(0,0,128)">measure</span>&gt;
+&lt;/<span style="color:rgb(0,0,128)">measureHistory</span>&gt; </pre></div></li></ul><h2 style="margin-top:1em;margin-bottom:16px;line-height:1.225;font-size:1.75em;padding-bottom:0.3em;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(238,238,238);color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif"><a name="TOC-Part-2---The-Server"></a><a href="https://github.com/cdparra/introsde/tree/master/assignments/assignment02#part-2---the-server" style="color:rgb(65,131,196);display:block;padding-right:6px;padding-left:30px;background:transparent" rel="nofollow"></a>Part 2 - The Server</h2><ul style="padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:16px"><li><p style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px;margin-top:16px;margin-bottom:16px">With that model, expose the following services through a RESTful API as follows: these <strong>CRUD operations for person</strong>&nbsp;plus some services to access and update health profile measurements</p><ul style="padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:0px"><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><strong>Request #1:</strong>&nbsp;<em>GET /person</em>&nbsp;should
+ list all the people (see above Person model to know what data to return
+ here) in your database (wrapped under the root element "people")</li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><strong>Request #2:</strong>&nbsp;<em>GET /person/{id}</em>&nbsp;should
+ give all the personal information plus current measures of person 
+identified by {id} (e.g., current measures means current health profile)</li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><strong>Request #3:</strong>&nbsp;<em>PUT /person/{id}</em>&nbsp;should
+ update the personal information of the person identified by {id} (e.g.,
+ only the person's information, not the measures of the health profile)</li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><strong>Request #4:</strong>&nbsp;<em>POST /person</em>&nbsp;should
+ create a new person and return the newly created person with its 
+assigned id (if a health profile is included, create also those 
+measurements for the new person).<br></li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><strong>Request #5:</strong>&nbsp;<em>DELETE /person/{id}</em>&nbsp;should delete the person identified by {id} from the system</li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><strong>Request #6:</strong>&nbsp;<em>GET /person/{id}/{measureType}</em>&nbsp;should return the list of values (the history) of {measureType} (e.g. weight) for person identified by {id}</li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><strong>Request #7:</strong>&nbsp;GET
+ /person/{id}/{measureType}/{mid} should return the value of 
+{measureType} (e.g. weight) identified by {mid} for person identified by
+ {id}</li><li style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><strong>Request #8:</strong>&nbsp;<em>POST /person/{id}/{measureType}</em>&nbsp;should
+ save a new value for the {measureType} (e.g. weight) of person 
+identified by {id} and archive the old value in the history</li><li><p style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px;margin-top:16px;margin-bottom:16px"><strong>Request #9:</strong>&nbsp;<em>GET /measureTypes</em>&nbsp;should return the list of measures your model supports in the following formats:</p><div style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px;margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">    &lt;<span style="color:rgb(0,0,128)">measureTypes</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">measureType</span>&gt;weight&lt;/<span style="color:rgb(0,0,128)">measureType</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">measureType</span>&gt;height&lt;/<span style="color:rgb(0,0,128)">measureType</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">measureType</span>&gt;steps&lt;/<span style="color:rgb(0,0,128)">measureType</span>&gt;
+        &lt;<span style="color:rgb(0,0,128)">measureType</span>&gt;bloodpressure&lt;/<span style="color:rgb(0,0,128)">measureType</span>&gt;
+    &lt;/<span style="color:rgb(0,0,128)">measureTypes</span>&gt;</pre></div><div style="margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;margin-top:0px;margin-bottom:0px;font-stretch:normal;padding:16px;border-top-left-radius:3px;border-top-right-radius:3px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)"><font face="Consolas, Liberation Mono, Menlo, Courier, monospace" color="#333333"><span style="line-height:20.2999992370605px">{
+   "measureType": [
+        "weight",
+        "height",
+        "steps",
+        "bloodpressure"
+    ]
+}</span><span style="line-height:1.45">
+<br></span></font></pre></div></li></ul></li><li><p style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6px;margin-top:16px;margin-bottom:16px"><strong>Extra points:</strong></p><ul style="color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6px;padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:0px"><li><strong>Extra #2 (Request #10):</strong>&nbsp;<em>PUT /person/{id}/{measureType}/{mid}</em>&nbsp;should update the value for the {measureType} (e.g., weight) identified by {mid}, related to the person identified by {id}</li><li><strong>Extra #3 (Request #11):</strong>&nbsp;<em>GET /person/{id}/{measureType}?before={beforeDate}&amp;after={afterDate}</em>&nbsp;should return the history of {measureType} (e.g., weight) for person {id} in the specified range of date</li><li><strong>Extra #4 (Request #12):</strong>&nbsp;<em>GET /person?measureType={measureType}&amp;max={max}&amp;min={min}</em>&nbsp;retrieves people whose {measureType} (e.g., weight) value is in the [{min},{max}] range (if only one for the query parameters is provided, use only that)</li></ul></li><li><font face="Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif" color="#333333"><span style="font-size:16px;line-height:25.6px"><b>Requirements:</b></span></font></li><ul><li><font face="Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif" color="#333333"><span style="font-size:16px;line-height:25.6px">SQLite database</span></font></li><li><font face="Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif" color="#333333"><span style="font-size:16px;line-height:25.6px">Server deployed on Heroku</span></font></li></ul></ul><h2 style="margin-top:1em;margin-bottom:16px;line-height:1.225;font-size:1.75em;padding-bottom:0.3em;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(238,238,238);color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif"><a name="TOC-Part-3---The-Client"></a><a href="https://github.com/cdparra/introsde/tree/master/assignments/assignment02#part-3---the-client" style="color:rgb(65,131,196);display:block;padding-right:6px;padding-left:30px;background:transparent" rel="nofollow"></a>Part 3 - The Client</h2><ul style="padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:16px;color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px"><li>Implement a client that can send all of these&nbsp;<strong>requests</strong>&nbsp;and print the&nbsp;<strong>responses. </strong>Implement ANT target (ant execute.client), which does all the calls sequentially and save the requests/responses information into a file (e.g. client-server-json.log and client-server-xml.log, push this file to a Github repository).</li><li><p style="margin-top:16px;margin-bottom:16px">Instructions:</p><ul style="padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:0px"><li><strong>Step 1.</strong>&nbsp;Print URL of the server you are calling (the server should be deployed on Heroku. It should be a URL of your partner student or of your own server if you work alone)</li><li><p style="margin-top:16px;margin-bottom:16px"><strong>Step 2.</strong>&nbsp;For each of of requests in the plan of&nbsp;<strong>Step 3</strong>, including extras, you have to send the request first with the&nbsp;<strong>Accept</strong>&nbsp;and <b>Content-type </b>(for POST/PUT requests) headers both set to&nbsp;<strong>Applicaiton/XML </strong>and then both set to&nbsp;<strong>Application/JSON</strong>.&nbsp;After getting the response, print the following in the console:</p><div style="margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">Request <span style="color:rgb(153,153,136);font-style:italic">#[NUMBER]: [HTTP METHOD] [URL] Accept: [TYPE] Content-type: [TYPE] </span>
+=<span style="font-weight:bold">&gt;</span> Result: [RESPONSE STATUS = OK, ERROR]
+=<span style="font-weight:bold">&gt;</span> HTTP Status: [HTTP STATUS CODE = 200, 404, 500 ...]
+[BODY]  
+Example: 
+    Request <span style="color:rgb(153,153,136);font-style:italic">#7: GET /person/5/weight/899 Accept: APPLICATION/XML Content-Type: APPLICATION/XML  </span>
+    =<span style="font-weight:bold">&gt;</span> Result: OK
+    =<span style="font-weight:bold">&gt;</span> HTTP Status: 200
+    <span style="font-weight:bold">&lt;</span>measure<span style="font-weight:bold">&gt;</span>
+        <span style="font-weight:bold">&lt;</span>mid<span style="font-weight:bold">&gt;899&lt;</span>/mid<span style="font-weight:bold">&gt;</span>
+        <span style="font-weight:bold">&lt;</span>value<span style="font-weight:bold">&gt;72&lt;</span>/value<span style="font-weight:bold">&gt;</span>
+        <span style="font-weight:bold">&lt;</span>created<span style="font-weight:bold">&gt;</span>2011-12-<span style="font-weight:bold">09&lt;</span>/created<span style="font-weight:bold">&gt;</span>
+    <span style="font-weight:bold">&lt;</span>/measure<span style="font-weight:bold">&gt;</span></pre></div></li></ul></li><li><p style="margin-top:16px;margin-bottom:16px;line-height:25.6000003814697px"><strong>Step 3.</strong>&nbsp;Use the following plan of requests to guide your implementation of the client.</p><ul style="padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:0px;line-height:25.6000003814697px"><li><strong>Step 3.1.</strong>&nbsp;Send&nbsp;<strong>R#1 (GET BASE_URL/person)</strong>. Calculate how many people are in the response. If more than 2, result is OK, else is ERROR (less than 3 persons). Save into a variable id of the first person (<strong>first_person_id</strong>) and of the last person (<strong>last_person_id</strong>)</li><li><strong>Step 3.2.</strong>&nbsp;Send&nbsp;<strong>R#2</strong>&nbsp;for&nbsp;<strong>first_person_id</strong>. If the responses for this is 200 or 202, the result is OK.<br></li><li><strong>Step 3.3.</strong>&nbsp;Send&nbsp;<strong>R#3</strong>&nbsp;for&nbsp;<strong>first_person_id</strong>&nbsp;changing the firstname. If the responses has the name changed, the result is OK.</li><li><p style="margin-top:16px;margin-bottom:16px"><strong>Step 3.4.</strong>&nbsp;Send&nbsp;<strong>R#4</strong>&nbsp;to create the following person. Store the id of the new person. If the answer is 201 (200 or 202 are also applicable) with a person in the body who has an ID, the result is OK.</p></li></ul><ul style="padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:0px"><li><div style="margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">    {
+          <span style="color:rgb(223,80,0)">"firstname"</span>     : <span style="color:rgb(223,80,0)">"Chuck"</span>,
+          <span style="color:rgb(223,80,0)">"lastname"</span>      : <span style="color:rgb(223,80,0)">"Norris"</span>,
+          <span style="color:rgb(223,80,0)">"birthdate"</span>     : <span style="color:rgb(223,80,0)">"1945-01-01"</span>
+          <span style="color:rgb(223,80,0)">"healthProfile"</span> <span style="color:rgb(166,23,23);background-color:rgb(227,210,210)">:</span> {
+                    <span style="color:rgb(223,80,0)">"weight"</span>  : <span style="color:rgb(148,82,119)">78.9</span>,
+                    <span style="color:rgb(223,80,0)">"height"</span>  : <span style="color:rgb(148,82,119)">172</span>
+          }
+    }</pre></div></li><li><p style="margin-top:16px;margin-bottom:16px"><strong>Step 3.5.</strong>&nbsp;Send&nbsp;<strong>R#5</strong>&nbsp;for the person you have just created. Then send&nbsp;<strong>R#1</strong>&nbsp;with the id of that person. If the answer is 404, your result must be OK.</p></li><li><strong>Step 3.6.</strong>&nbsp;Follow now with the&nbsp;<strong>R#9 (GET BASE_URL/measureTypes)</strong>. If response contains more than 2 measureTypes - result is OK, else is ERROR (less than 3 measureTypes). Save all measureTypes into array (<strong>measure_types</strong>)</li><li><strong>Step 3.7.</strong>&nbsp;Send&nbsp;<strong>R#6 (GET BASE_URL/person/{id}/{measureType})</strong>&nbsp;for the first person you obtained at the beginning and the last person, and for each measure types from&nbsp;<strong>measure_types</strong>. If no response has at least one measure - result is ERROR (no data at all) else result is OK. Store one&nbsp;<strong>measure_id</strong>&nbsp;and one&nbsp;<strong>measureType</strong>.</li><li><strong>Step 3.8.</strong>&nbsp;Send&nbsp;<strong>R#7 (GET BASE_URL/person/{id}/{measureType}/{mid})</strong>&nbsp;for the stored measure_id and measureType. If the response is 200, result is OK, else is ERROR.</li><li><p style="margin-top:16px;margin-bottom:16px"><strong>Step 3.9.</strong>&nbsp;Choose a&nbsp;<strong>measureType</strong>&nbsp;from&nbsp;<strong>measure_types</strong>&nbsp;and send the request&nbsp;<strong>R#6 (GET BASE_URL/person/{first_person_id}/{measureType})</strong>&nbsp;and save count value (e.g. 5 measurements). Then send&nbsp;<strong>R#8 (POST BASE_URL/person/{first_person_id}/{measureType})</strong>&nbsp;with the measurement specified below. Follow up with another&nbsp;<strong>R#6</strong>&nbsp;as the first to check the new count value. If it is 1 measure more - print OK, else print ERROR. Remember, first with JSON and then with XML as content-types</p><div style="margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">        &lt;<span style="color:rgb(0,0,128)">measure</span>&gt;
+            &lt;<span style="color:rgb(0,0,128)">value</span>&gt;72&lt;/<span style="color:rgb(0,0,128)">value</span>&gt;
+            &lt;<span style="color:rgb(0,0,128)">created</span>&gt;2011-12-09&lt;/<span style="color:rgb(0,0,128)">created</span>&gt;
+        &lt;/<span style="color:rgb(0,0,128)">measure</span>&gt;</pre></div></li><li><p style="margin-top:16px;margin-bottom:16px"><strong>Step 3.10.</strong>&nbsp;Send&nbsp;<strong>R#10</strong>&nbsp;using the {mid} or the measure created in the previous step and updating the value at will. Follow up with at&nbsp;<strong>R#6</strong>&nbsp;to check that the value was updated. If it was, result is OK, else is ERROR.</p><div style="margin-bottom:16px;background-image:initial;background-repeat:initial"><pre style="overflow:auto;font-family:Consolas,Liberation Mono,Menlo,Courier,monospace;font-size:14px;margin-top:0px;margin-bottom:0px;font-stretch:normal;line-height:1.45;padding:16px;border-radius:3px;word-wrap:normal;word-break:normal;background-color:rgb(247,247,247)">      &lt;<span style="color:rgb(0,0,128)">measure</span>&gt;
+          &lt;<span style="color:rgb(0,0,128)">value</span>&gt;90&lt;/<span style="color:rgb(0,0,128)">value</span>&gt;
+          &lt;<span style="color:rgb(0,0,128)">created</span>&gt;2011-12-09&lt;/<span style="color:rgb(0,0,128)">created</span>&gt;
+      &lt;/<span style="color:rgb(0,0,128)">measure</span>&gt;</pre></div></li><li><p style="margin-top:16px;margin-bottom:16px"><strong>Step 3.11.</strong>&nbsp;Send&nbsp;<strong>R#11</strong>&nbsp;for a measureType, before and after dates given by your fellow student (who implemented the server). If status is 200 and there is at least one measure in the body, result is OK, else is ERROR</p></li><li><strong>Step 3.12.</strong>&nbsp;Send&nbsp;<strong>R#12</strong>&nbsp;using the same parameters as the previous steps. If status is 200 and there is at least one person in the body, result is OK, else is ERROR</li></ul></li><li><p style="margin-top:16px;margin-bottom:16px"><strong>IMPORTANT:</strong>&nbsp;Be mindful of&nbsp;<strong>Step 2</strong>&nbsp;for each request.</p></li></ul><h2 style="margin-top:1em;margin-bottom:16px;line-height:1.225;font-size:1.75em;padding-bottom:0.3em;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(238,238,238);color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif"><a name="TOC-Assignment-Rules"></a><a href="https://github.com/cdparra/introsde/tree/master/assignments/assignment02#assignment-rules" style="color:rgb(65,131,196);display:block;padding-right:6px;padding-left:30px;background:transparent" rel="nofollow"></a>Assignment Rules</h2><ul style="padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:16px;color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px"><li style="line-height:25.6px">Make sure your server is deployed on Heroku and works well</li><li style="line-height:25.6px">Make sure you can run ant execute.client against a server of your student partner or your own server if you work alone</li><li style="line-height:25.6px"><font face="Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif" color="#333333"><span style="line-height:25.6px">Create a repository in Github, under your account (call it introsde-2016-assignment-2)</span></font></li><li style="line-height:25.6px"><font face="Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif" color="#333333"><span style="line-height:25.6px">Push your code (no /build, no libraries, no IDE files (e.g. .idea, .project etc)) to this repository</span></font></li><li style="line-height:25.6px"><font face="Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif" color="#333333"><span style="line-height:25.6px">Make sure you also pushed client-server.log to this repository (in root folder)</span></font></li><li><span style="line-height:25.6px;background-color:transparent">Create a Readme.md file in Github and add there&nbsp;</span></li><ul><li><span style="line-height:25.6px">The name of the student with whom you worked in pair (otherwise write you worked alone)</span></li><li><span style="line-height:25.6px">The URL of your server and server URL of the partner student</span></li><li><span style="line-height:25.6px">Link to his/her Github repository</span></li></ul><li><font face="Helvetica Neue, Helvetica, Segoe UI, Arial, freesans, sans-serif" color="#333333"><span style="line-height:25.6px">Make sure you can do&nbsp;<i>git clone {your repository}</i>, do&nbsp;<i>ant execute.client</i>&nbsp;and everything works well</span></font></li><li style="line-height:25.6px"><strong style="line-height:25.6px;background-color:transparent">Deadline is 20-Nov 23.59PM</strong></li></ul><h2 style="margin-top:1em;margin-bottom:16px;line-height:1.225;font-size:1.75em;padding-bottom:0.3em;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:rgb(238,238,238);color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif"><a name="TOC-Assignment-Evaluation"></a><a href="https://github.com/cdparra/introsde/tree/master/assignments/assignment02#assignment-evaluation" style="color:rgb(65,131,196);display:block;padding-right:6px;padding-left:30px;background:transparent" rel="nofollow"></a>Assignment Evaluation</h2><ul style="padding:0px 0px 0px 2em;margin-top:0px;color:rgb(51,51,51);font-family:Helvetica Neue,Helvetica,Segoe UI,Arial,freesans,sans-serif;font-size:16px;line-height:25.6000003814697px;margin-bottom:0px!important"><li>The assignment will be evaluated in terms of:<ul style="padding:0px 0px 0px 2em;margin-top:0px;margin-bottom:0px"><li>Completeness: Requirements satisfaction</li><li>Functioning: Execution &amp; Deployment<br></li><li>Organization: code structure (how well is your work organized, the easier you make it for us to understand what you did and how to run it, the more chances for you to have a better mark)</li><li>Extra points (if you work in pairs or extra requests are supported)</li><li>Submitted on time (before the deadline defined above)</li></ul></li><li>Extra points are used as "recovery" you didn't finish the requirements or didn't submit in time</li></ul></div></td></tr></tbody></table>
+</div> 
+</div> 
+<div id="sites-canvas-bottom-panel">
+<div xmlns="http://www.w3.org/1999/xhtml" id="COMP_page-subpages"> </div>
+<div id="sites-attachments-container">
+</div>
+<a xmlns="http://www.w3.org/1999/xhtml" name="page-comments"></a>
+<div xmlns="http://www.w3.org/1999/xhtml" id="COMP_page-comments"><div class="sites-comment-docos-wrapper"><div class="sites-comment-docos"><div class="sites-comment-docos-background"></div><div class="sites-comment-docos-header"><div class="sites-comment-docos-header-title">Comments</div></div><div id="sites-comment-docos-pane" class="sites-comment-docos-pane"></div></div></div></div>
+</div>
+</div> 
+</td> 
+</tr>
+</tbody></table> 
+</div> 
+</div> 
+<div id="sites-chrome-footer-wrapper">
+<div id="sites-chrome-footer-wrapper-inside">
+<div id="sites-chrome-footer">
+</div>
+</div>
+</div>
+</div> 
+</div> 
+<div id="sites-chrome-adminfooter-container">
+<div xmlns="http://www.w3.org/1999/xhtml" class="sites-adminfooter" role="navigation"><p><a class="sites-system-link" href="https://www.google.com/a/UniversalLogin?continue=https://sites.google.com/a/unitn.it/introsde_2016-17/lab-sessions/assignments/assignment-2&amp;service=jotspot">Sign in</a><span aria-hidden="true">|</span><a class="sites-system-link" href="https://sites.google.com/a/unitn.it/introsde_2016-17/system/app/pages/recentChanges">Recent Site Activity</a><span aria-hidden="true">|</span><a class="sites-system-link" href="https://sites.google.com/a/unitn.it/introsde_2016-17/system/app/pages/reportAbuse" target="_blank">Report Abuse</a><span aria-hidden="true">|</span><a class="sites-system-link" href="javascript:;" onclick="window.open(webspace.printUrl)">Print Page</a><span aria-hidden="true">|</span><span class="sites-system-link">Powered By</span> <b class="powered-by"><a href="http://sites.google.com/">Google Sites</a></b></p></div>
+</div>
+</div> 
+</div> 
+<div id="sites-chrome-onebar-footer">
+</div>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+    window.jstiming.load.tick('sjl');
+  </script>
+<script xmlns="http://www.w3.org/1999/xhtml" src="Assignment%2002:%20RESTful%20Services%20-%20introSDE_2016_17_files/jot_min_view__en.js"></script>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+    window.jstiming.load.tick('jl');
+  </script>
+<script xmlns="http://www.w3.org/1999/xhtml">if (webspace.editorResources['text']) {webspace.editorResources['text'].unshift('\/a\/unitn.it\/introsde_2016-17\/system\/app\/css\/overlay.css?cb\x3dski1a100%25150goog-ws-nonenone30themedefaultstandard');webspace.editorResources['text'].unshift('\/a\/unitn.it\/introsde_2016-17\/_\/rsrc\/1476943131000\/system\/app\/themes\/ski\/standard-css-ski-ltr-ltr.css');}</script>
+<script xmlns="http://www.w3.org/1999/xhtml">
+      
+          sites.core.Analytics.createTracker();
+          sites.core.Analytics.trackPageview();
+        
+    </script>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+      gsites.HoverPopupMenu.createSiteDropdownMenus('sites-header-nav-dropdown', false);
+    </script>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript" defer="true">
+            JOT_setupNav("2bd", "Navigation", true);
+            JOT_addListener('titleChange', 'JOT_NAVIGATION_titleChange', 'COMP_2bd');
+          </script>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+              new sites.CommentPane('//docs.google.com/comments/d/AAHRpnXv4CObPcYZ0ZvyUbRf1R-u2M4BYhE1C-jw7V4RwI-RUS_G-s0Sihqt8rEe8hTMAWo0eHG_5dzwbRBt9KRHkQaeLoK26tNn6jpQPuDnwvTTVmHFEQTZhlW6Io-zJphCzs6u-aPGo/api/js?anon=true',
+                  false, false);
+            </script>
+<script xmlns="http://www.w3.org/1999/xhtml">
+                    window.onload = function() {
+                      if (false) {
+                        JOT_setMobilePreview();
+                      }
+                      var loadTimer = window.jstiming.load;
+                      loadTimer.tick("ol");
+                      loadTimer["name"] = "load," + webspace.page.type + ",user_page";
+                      window.jstiming.report(loadTimer, {}, 'https://gg.google.com/csi');
+                    }
+                  </script>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+        JOT_insertAnalyticsCode(false,
+            false);
+      </script>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+    var maestroRunner = new gsites.pages.view.SitesMaestroRunner(
+        webspace, "en");
+    maestroRunner.initListeners();
+    maestroRunner.installEditRender();
+  </script>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript" defer="true">
+  //<![CDATA[
+    // Decorate any fastUI buttons on the page with a class of 'goog-button'.
+    if (webspace.user.hasWriteAccess) {
+      JOT_decorateButtons();
+    }
+
+    // Fires delayed events.
+    (function() {
+      JOT_fullyLoaded = true;
+      var delayedEvents = JOT_delayedEvents;
+      for (var x = 0; x < delayedEvents.length; x++) {
+        var event = delayedEvents[x];
+        JOT_postEvent(event.eventName, event.eventSrc, event.payload);
+      }
+      JOT_delayedEvents = null;
+      JOT_postEvent('pageLoaded');
+    })();
+  //]]>
+</script>
+<script xmlns="http://www.w3.org/1999/xhtml" type="text/javascript">
+    JOT_postEvent('decorateGvizCharts');
+  </script>
+<script type="text/javascript">
+          JOT_setupPostRenderingManager();
+        </script>
+<script type="text/javascript">
+          JOT_postEvent('renderPlus', null, 'sites-chrome-main');
+        </script>
+<div id="server-timer-div" style="display:none"> </div>
+<script type="text/javascript">
+          window.jstiming.load.tick('render');
+          JOT_postEvent('usercontentrendered', this);
+        </script>
+
+
+</body></html>
